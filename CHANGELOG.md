@@ -14,11 +14,15 @@ All meaningful playbook changes are recorded here.
 - First reusable architecture pattern: bounded document automation workflow.
 - First architecture decision: prefer a bounded workflow over an autonomous agent for defined, consequential document processing.
 - Project-to-playbook knowledge flow that separates private evidence, sanitised case studies, patterns, and ADRs.
+- Weekly digest for 2026-07-30 covering Microsoft Foundry Local Agentic Retrieval, agent containment, SDK lifecycle controls, and official code-reading picks.
+- Production security guidance for limiting agent blast radius through trust establishment, sandboxing, egress control, scoped identity, and policy-gated actions.
+- Production reliability guidance for pinning rapidly evolving agent SDKs, making model defaults explicit, and regression-testing upgrades.
 
 ### Changed
 
 - Expanded the repository map to include case studies, patterns, and anti-patterns.
 - Clarified that OpenAI evaluation guidance must track current tooling rather than assume the legacy Evals platform remains permanent.
+- Classified Microsoft Agentic Retrieval in Foundry Local as a targeted Preview option for edge, disconnected, and air-gapped RAG rather than a default managed-cloud architecture.
 
 ### Deprecated
 
@@ -30,3 +34,4 @@ All meaningful playbook changes are recorded here.
 - Anthropic architecture and certification mapping.
 - Wider OpenAI Responses API and Agents SDK implementation pages.
 - Production checklists for identity, observability, reliability, and cost.
+- Project-validated evidence for the new agent capability-containment pattern.
