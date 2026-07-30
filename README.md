@@ -19,6 +19,10 @@ A production-first, source-grounded engineering playbook for designing, implemen
 - Mark preview, experimental, deprecated, superseded, and unverified content explicitly.
 - Every fast-changing technical claim should include a primary source and a `last_verified` date.
 
+## Practice guides
+
+- [Specification-Driven AI Coding and Harness Engineering](docs/workflows/specification-driven-ai-coding.md)
+
 ## Repository workflow
 
 Weekly research updates are proposed through draft pull requests. Automated updates must not merge directly into `main`.
