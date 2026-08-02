@@ -1,7 +1,7 @@
 ---
 id: example-topic-id
 title: Topic
-ncontent_type: guide
+content_type: guide
 document_status: draft
 evidence_status: unverified
 product_lifecycle: not-applicable
