@@ -1,6 +1,6 @@
 ---
 status: current
-last_verified: 2026-07-30
+last_verified: 2026-08-02
 source_priority: official
 vendors:
   - openai
@@ -28,19 +28,20 @@ A production deployment should not silently change because an SDK release change
 - handoff history;
 - synchronous execution semantics;
 - supported runtime versions;
-- MCP session behaviour.
+- MCP session behaviour;
+- sandbox or workspace safety behaviour.
 
-## Why this matters
+## Current evidence
 
-The OpenAI Agents SDK currently uses `0.Y.Z` versioning and documents that minor `Y` releases can include breaking changes to public interfaces. Recent releases have also changed important defaults and runtime behaviour.
+The OpenAI Agents SDK still uses `0.Y.Z` versioning. Its official release policy states that minor `Y` releases can include breaking changes to public, non-beta interfaces and recommends pinning when breaking changes are unacceptable.
 
-Even when an API remains source-compatible, a changed model default or error path can alter quality, latency, cost, retries, and user-visible outcomes.
+The current changelog also demonstrates why explicit configuration matters. Recent minor releases have changed default models, surfaced refusals through a dedicated error path, changed MCP/tool failure behaviour, altered handoff semantics, and tightened sandbox path handling. A release can therefore change quality, cost, latency, security, or error handling even when application source code is unchanged.
 
 ## Required controls
 
 ### Pin dependencies
 
-Use an exact version or a controlled lockfile in deployed applications.
+Use an exact version or controlled lockfile in deployed applications.
 
 ```text
 openai-agents==0.Y.Z
@@ -48,11 +49,9 @@ openai-agents==0.Y.Z
 
 Do not use an unconstrained dependency such as `>=0.Y` in a production service.
 
-### Configure models explicitly
+### Configure behaviour explicitly
 
-Set the production model in configuration rather than relying on SDK defaults.
-
-Also make explicit any behaviour that affects quality or cost, including:
+Set the production model in configuration rather than relying on SDK defaults. Also make explicit any behaviour affecting quality or cost, including:
 
 - reasoning effort;
 - verbosity;
@@ -60,6 +59,7 @@ Also make explicit any behaviour that affects quality or cost, including:
 - turn limits;
 - timeout and retry policy;
 - tool failure handling;
+- refusal handling;
 - handoff-history behaviour.
 
 ### Separate upgrade from deployment
@@ -70,9 +70,10 @@ An SDK upgrade should be a reviewed change with:
 2. lockfile diff;
 3. unit and contract tests;
 4. recorded-agent regression evaluation;
-5. cost and latency comparison;
-6. canary or staged deployment;
-7. rollback plan.
+5. failure-path tests;
+6. cost and latency comparison;
+7. canary or staged deployment;
+8. rollback plan.
 
 ### Test failure semantics
 
@@ -86,7 +87,7 @@ Regression suites should explicitly cover:
 - cancellation;
 - handoff context;
 - duplicate or concurrent writes;
-- sandbox path and archive safety.
+- sandbox path, archive, and symlink safety.
 
 ### Capture runtime provenance
 
@@ -105,30 +106,21 @@ Without provenance, a behaviour regression cannot be reliably attributed to code
 
 | Change type | Minimum response |
 |---|---|
-| Patch release with bug fixes | Review notes, run focused regression tests |
+| Patch release with bug fixes | Review notes and run focused regression tests |
 | Minor pre-1.0 release | Treat as potentially breaking; run full regression and staged rollout |
 | Default model change | Set model explicitly; compare quality, latency, and cost |
 | Tool or MCP failure change | Re-run failure-path and retry tests |
 | Runtime support change | Update CI matrix and deployment image |
 | Refusal or structured-output change | Re-run safety, abstention, and schema-recovery tests |
+| Sandbox or workspace change | Re-run path traversal, mount, archive, and permission-boundary tests |
 
 ## Anti-patterns
 
-### Floating production dependencies
-
-A rebuild can produce different runtime behaviour without a source-code change.
-
-### Implicit default model
-
-A library update can change model quality, cost, latency, and reasoning behaviour.
-
-### Happy-path-only upgrade testing
-
-Most agent regressions appear in tool errors, refusals, retries, handoffs, and long-running state rather than simple single-turn responses.
-
-### No version data in traces
-
-Operational incidents become difficult to reproduce or compare.
+- Floating production dependencies
+- Implicit default models or reasoning settings
+- Happy-path-only upgrade testing
+- Missing SDK/model provenance in traces
+- Treating a non-breaking source change as proof of unchanged behaviour
 
 ## Validation checklist
 
@@ -138,6 +130,7 @@ Operational incidents become difficult to reproduce or compare.
 - [ ] Behavioural evals cover success and failure paths.
 - [ ] Cost and latency are compared before rollout.
 - [ ] Traces include SDK, model, prompt, and tool-schema versions.
+- [ ] Security boundaries are retested when sandbox or tool behaviour changes.
 - [ ] A rollback path is tested.
 
 ## Source
