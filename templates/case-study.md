@@ -1,26 +1,36 @@
 ---
-title: <case-study-title>
-status: draft | validated | superseded
-last_verified: YYYY-MM-DD
-source_priority: mixed
+id: case-study-example
+title: Case Study Title
+content_type: case-study
+document_status: draft
+evidence_status: project-validated
+product_lifecycle: mixed
+last_verified: "YYYY-MM-DD"
+next_review_due: "YYYY-MM-DD"
+review_frequency: quarterly
+canonical_for: []
+retrieval:
+  default_grounding: false
+  priority: 60
+  role: supporting-evidence
 vendors: []
 topics: []
-evidence:
-  project: private-worklog-reference
-  official_sources: []
 confidentiality: sanitised-public
-review_frequency: quarterly
+supersedes: []
+superseded_by: []
 ---
 
-# Case Study: <Title>
+# Case Study: Title
 
 ## 1. Executive summary
 
 Summarise the business problem, production boundary, architecture, measurable outcome, and most reusable lesson.
 
+State explicitly that the results are project-specific and must not be treated as a universal benchmark.
+
 ## 2. Problem and business context
 
-Describe the workflow before the change, the users, the operational pain, and why the problem mattered.
+Describe the workflow before the change, users, operational pain, failure consequences, and why the problem mattered.
 
 ## 3. Scope and constraints
 
@@ -34,56 +44,56 @@ Describe the workflow before the change, the users, the operational pain, and wh
 
 ### Constraints
 
-- Data sensitivity
+- Data sensitivity and publication boundary
 - Integration and legacy systems
-- Accuracy and error consequences
+- Accuracy and asymmetric error consequences
 - Human-review capacity
 - Latency and cost
-- Audit and compliance
+- Audit, compliance, and retention
 
 ## 4. Why AI was or was not needed
 
-Explain which parts were deterministic, which required retrieval, and which benefited from model reasoning. State whether the solution is a workflow, an agent, or a hybrid.
+Explain which parts were deterministic, which required retrieval, and which benefited from model reasoning. State whether the solution was a workflow, agent, or hybrid.
 
 ## 5. Architecture
 
 ```mermaid
 flowchart LR
     A[Input] --> B[Deterministic preprocessing]
-    B --> C[AI capability]
-    C --> D[Schema validation]
+    B --> C[Bounded AI capability]
+    C --> D[Schema and domain validation]
     D --> E{Policy gate}
-    E -->|Safe| F[Bounded action]
+    E -->|Safe| F[Bounded reversible action]
     E -->|Uncertain| G[Human review]
 ```
 
-Explain component boundaries, source-of-truth data, state, checkpoints, permissions, human approval, and failure handling.
+Explain component boundaries, systems of record, state, checkpoints, permissions, human approval, and failure handling.
 
 ## 6. Business logic
 
-Document the durable rules separately from prompts.
+Document durable rules separately from prompts.
 
 | Rule | Deterministic/probabilistic | Evidence source | Failure action |
 |---|---|---|---|
 | | | | |
 
-## 7. Implementation process
+## 7. Implementation history
 
-Describe the main versions, experiments, failures, and evidence-driven changes. Do not present only the final architecture.
+Describe major versions, experiments, failures, and evidence-driven changes. Do not present only the final architecture.
 
 ## 8. Evaluation
 
 ### Dataset
 
-Describe coverage and limitations without exposing private data.
+Describe coverage, slices, holdouts, and limitations without exposing private data.
 
 ### Metrics
 
-Report stage-level and business metrics. Include false-auto-accept risk, human-review impact, cost, and latency when available.
+Report stage-level and business metrics. Include false-auto-accept risk, human-review impact, cost, latency, and operational recovery where available.
 
 ### Results
 
-Clearly label rounded project evidence and avoid presenting it as a universal benchmark.
+Clearly label rounded project evidence and explain why it cannot be generalised without a comparable dataset.
 
 ## 9. Security, safety, and governance
 
@@ -94,14 +104,15 @@ Clearly label rounded project evidence and avoid presenting it as a universal be
 - Human approval
 - Audit and retention
 - Change and model-version control
+- Maximum credible blast radius
 
 ## 10. Reliability and observability
 
-- Correlation and traces
-- Validation errors
-- Retry and timeout
-- Idempotency
-- Checkpoint/resume
+- Correlation IDs and traces
+- Validation errors and reason codes
+- Retry classification and timeout
+- Idempotency and duplicate control
+- Checkpoint and resume
 - Cost and token metrics
 - Business outcome monitoring
 
@@ -113,24 +124,35 @@ Clearly label rounded project evidence and avoid presenting it as a universal be
 
 - 
 
-## 13. Reusable patterns
+## 13. Reusable knowledge
 
-Link extracted patterns and ADRs.
+Link extracted patterns, ADRs, anti-patterns, and canonical guides. The case study should remain supporting evidence rather than the primary recommendation.
 
 ## 14. Best-practice mapping
 
-| Decision | Evidence label | Primary source | Alignment or gap |
+| Decision | Evidence label | Source ID | Alignment or gap |
 |---|---|---|---|
-| | Official requirement / Official recommendation / Reference architecture / Project evidence / Engineering inference | | |
+| | | | |
 
 ## 15. How to build it today
 
-Separate historical project implementation from current recommendations. Recheck service names, API lifecycle, model capabilities, and preview/GA status.
+Separate historical project implementation from current recommendations. Recheck service names, API lifecycle, model capabilities, preview/GA status, security features, and supported SDKs.
 
-## 16. Limitations and open questions
+## 16. Publication and sanitisation record
+
+- Organisation and customer identifiers removed:
+- Internal endpoints and account identifiers removed:
+- Raw documents and messages removed:
+- Confidential thresholds generalised:
+- Metrics rounded where appropriate:
+- Publication reviewer:
+
+## 17. Limitations and open questions
 
 - 
 
-## 17. Sources
+## 18. Sources
 
-Use current primary sources first. Community material may explain but must not be the only evidence for a durable recommendation.
+| ID | Source | Evidence | Supports | Checked on | Lifecycle/version |
+|---|---|---|---|---|---|
+| SRC-001 | Current primary source | official | Specific decision | YYYY-MM-DD | |
