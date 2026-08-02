@@ -59,6 +59,10 @@ Reusable pattern / ADR / anti-pattern
 Future project design and evaluation
 ```
 
+## Practice guides
+
+- [Specification-Driven AI Coding and Harness Engineering](docs/workflows/specification-driven-ai-coding.md)
+
 ## Repository workflow
 
 Weekly research updates are proposed through draft pull requests. Automated updates must not merge directly into `main`.
