@@ -12,6 +12,7 @@ All meaningful playbook changes are recorded here.
 - Machine-readable `catalog.yaml` with content, evidence, lifecycle, canonical-topic, retrieval-role, priority, and review metadata.
 - JSON Schema for the knowledge catalog.
 - Content validation script and GitHub Actions workflow.
+- Pinned validation dependencies in `requirements-validation.txt`.
 - Pull-request evidence, lifecycle, sanitisation, and validation checklist.
 - Initial retrieval evaluation cases covering canonical selection, digest exclusion, project-evidence boundaries, current-source verification, and Chinese answers.
 
@@ -23,6 +24,7 @@ All meaningful playbook changes are recorded here.
 - Updated the repository map with unique directory numbers and machine-quality assets.
 - Made quality-control and GPT-usage entry points visible from the README.
 - Required official lifecycle evidence before adding deprecation or retirement entries.
+- Standardised the accounts-payable case-study metadata and removed an unsupported product-lifecycle assertion in favour of implementation-time official verification.
 
 ### Deprecated
 
@@ -30,10 +32,10 @@ All meaningful playbook changes are recorded here.
 
 ### Needs validation
 
-- Migrate all legacy page front matter to the standard metadata model.
+- Migrate remaining legacy page front matter to the standard metadata model.
 - Add an executable retrieval/evaluation runner for `evals/retrieval-cases.yaml` after selecting the indexing stack.
 - Confirm branch-protection settings require the content-quality workflow before merge.
-- Review existing pages for unsupported or ambiguous lifecycle claims during the next source audit.
+- Review remaining existing pages for unsupported or ambiguous lifecycle claims during the next source audit.
 
 ## 2026-08-02
 
