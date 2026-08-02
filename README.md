@@ -99,13 +99,13 @@ The case study is a sanitised public abstraction. Detailed project evidence rema
 Run the local validator with:
 
 ```bash
-python -m pip install pyyaml jsonschema
+python -m pip install -r requirements-validation.txt
 python scripts/validate_content.py
 ```
 
 The validator checks the catalog schema, canonical retrieval roles, catalog paths, verification-date consistency, internal links, digest exclusion rules, replacement metadata, and obvious secret material.
 
-GitHub Actions runs the same validation for pull requests and pushes to `main`.
+GitHub Actions runs the same validation for branch pushes and pull requests.
 
 Retrieval behaviour is specified in [evals/retrieval-cases.yaml](evals/retrieval-cases.yaml). The initial eval set checks canonical selection, digest exclusion, evidence boundaries, current-source verification, Chinese answers, and abstention-friendly behaviour.
 
