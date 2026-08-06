@@ -17,8 +17,9 @@ The repository is organised by engineering lifecycle rather than by vendor. Vend
 10-patterns/                Reusable architecture, reliability, security, and evaluation patterns
 11-anti-patterns/           Repeated failure modes and unsafe designs
 decisions/                  Architecture Decision Records
-weekly-digests/              Time-stamped research and change summaries
-templates/                   Standard page, case-study, pattern, ADR, and digest templates
+docs/contributing/          Authoring, review, and private-evidence extraction guidance
+weekly-digests/             Time-stamped research and change summaries
+templates/                  Standard page, case-study, pattern, ADR, and digest templates
 ```
 
 ## Knowledge layers
@@ -36,6 +37,8 @@ Production checklist and reference architecture
 ```
 
 A case study records what happened in a specific project. A pattern states a reusable solution and its trade-offs. An ADR records why one option was chosen over alternatives. These content types must not be collapsed into a single “best practice” page.
+
+Private evidence should first pass through a playbook-candidate review in `AI_Engineering_Worklog`, then follow [Extracting Public Guidance from a Private Worklog](docs/contributing/from-private-worklog.md). Public entries must be independently understandable and must not expose or depend on private repository links.
 
 ## Initial content priorities
 
