@@ -15,6 +15,7 @@ All meaningful playbook changes are recorded here.
 - First architecture decision: prefer a bounded workflow over an autonomous agent for defined, consequential document processing.
 - Project-to-playbook knowledge flow that separates private evidence, sanitised case studies, patterns, and ADRs.
 - Weekly digest for 2026-07-30 covering Microsoft Foundry Local Agentic Retrieval, agent containment, SDK lifecycle controls, and official code-reading picks.
+- Weekly digest for 2026-08-06 covering Microsoft Agent Framework release progression, OpenAI Agents SDK state and boundary fixes, and the state-machine upgrade firewall pattern.
 - Production security guidance for limiting agent blast radius through trust establishment, sandboxing, egress control, scoped identity, and policy-gated actions.
 - Production reliability guidance for pinning rapidly evolving agent SDKs, making model defaults explicit, and regression-testing upgrades.
 
@@ -35,3 +36,5 @@ All meaningful playbook changes are recorded here.
 - Wider OpenAI Responses API and Agents SDK implementation pages.
 - Production checklists for identity, observability, reliability, and cost.
 - Project-validated evidence for the new agent capability-containment pattern.
+- Release verification for OpenAI Agents SDK main-branch state, tracing, MCP, validation-redaction, and sandbox fixes reviewed on 2026-08-06.
+- Package-level migration review before adopting Microsoft Agent Framework Python 1.13.0 or .NET 1.17.0.
