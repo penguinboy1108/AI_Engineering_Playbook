@@ -29,8 +29,10 @@ The playbook is organised by engineering lifecycle rather than by vendor. See [P
 Key governance and authoring files:
 
 - [GOVERNANCE.md](GOVERNANCE.md)
+- [SOURCE_POLICY.md](SOURCE_POLICY.md)
 - [CHANGELOG.md](CHANGELOG.md)
 - [DEPRECATIONS.md](DEPRECATIONS.md)
+- [Extracting public guidance from a private worklog](docs/contributing/from-private-worklog.md)
 - [Playbook entry template](templates/playbook-entry.md)
 - [Case study template](templates/case-study.md)
 - [Pattern template](templates/pattern.md)
@@ -48,20 +50,23 @@ The case study is a sanitised public abstraction. Detailed project evidence rema
 ## Knowledge flow
 
 ```text
-Private project worklog
-        ↓
-Sanitisation and evidence review
-        ↓
-Public case study
-        ↓
-Reusable pattern / ADR / anti-pattern
-        ↓
-Future project design and evaluation
+Private periodic logs, project evidence, and decisions
+                         ↓
+          Private playbook-candidate review
+                         ↓
+       Sanitisation and evidence separation
+                         ↓
+      Current primary-source verification
+                         ↓
+ Public case study / pattern / ADR / anti-pattern / workflow
 ```
+
+The private worklog may also contain non-AI engineering work and reporting evidence. That material should enter this public repository only when it produces a durable AI engineering lesson.
 
 ## Practice guides
 
 - [Specification-Driven AI Coding and Harness Engineering](docs/workflows/specification-driven-ai-coding.md)
+- [Extracting Public Guidance from a Private Worklog](docs/contributing/from-private-worklog.md)
 
 ## Repository workflow
 
@@ -80,6 +85,8 @@ Update changelog and deprecation registry
                 ↓
 Open draft pull request for human review
 ```
+
+Project-derived updates follow the private-worklog extraction guide and must be independently understandable without access to private evidence.
 
 ## Current status
 
