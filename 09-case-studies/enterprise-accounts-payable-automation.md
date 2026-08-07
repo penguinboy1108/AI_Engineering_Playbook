@@ -1,8 +1,20 @@
 ---
+id: bounded-document-automation-case-study
 title: Bounded AI Workflow for Enterprise Accounts Payable Automation
-status: validated-project-case-study
+status: current
+content_type: case-study
+document_status: current
+evidence_status: project-validated
+product_lifecycle: mixed
 last_verified: 2026-07-27
-source_priority: official-plus-project-evidence
+next_review_due: 2026-10-27
+review_frequency: quarterly
+canonical_for:
+  - bounded-document-automation
+retrieval:
+  default_grounding: true
+  priority: 70
+  role: supporting-evidence
 vendors:
   - microsoft
   - anthropic
@@ -15,20 +27,23 @@ topics:
   - evaluation
   - erp-integration
 confidentiality: sanitised-public
-review_frequency: quarterly
+supersedes: []
+superseded_by: []
 ---
 
 # Case Study: Bounded AI Workflow for Enterprise Accounts Payable Automation
 
 ## Executive summary
 
-A completed enterprise project automated part of the accounts-payable invoice workflow by combining document extraction, email context, supplier and purchase-order retrieval, model-assisted line matching, deterministic financial validation, ERP payload construction, and human review.
+A completed enterprise project automated part of an accounts-payable invoice workflow by combining document extraction, email context, supplier and purchase-order retrieval, model-assisted line matching, deterministic financial validation, ERP payload construction, and human review.
 
-The system did **not** grant an autonomous agent broad authority over financial processing. The business path was known in advance, so code controlled the workflow while models handled bounded interpretation tasks. Every model output was treated as an untrusted proposal until it passed schema, arithmetic, referential, and policy checks against source-system data.
+The system did **not** give an autonomous agent broad authority over financial processing. The business path was known in advance, so code controlled the workflow while models handled bounded interpretation tasks. Every model output was treated as an untrusted proposal until it passed schema, arithmetic, referential, and policy checks against source-system data.
 
-The downstream action was deliberately reversible: the system prepared and parked a transaction for AP verification rather than automatically completing the final financial posting. On the internal evaluation set, header extraction exceeded 90%, while full line-item automation was materially lower. Purchase-order matching was also the dominant model-cost stage. These results drove a production strategy based on staged metrics, deterministic candidate reduction, explicit block reasons, and selective automation coverage.
+The downstream action was deliberately reversible: the system prepared and parked a transaction for AP verification rather than automatically completing final financial posting. On the internal evaluation set, header extraction exceeded 90%, while full line-item automation was materially lower. Purchase-order matching was also the dominant model-cost stage.
 
-Detailed organisation, supplier, dataset, financial-rule, and implementation information remains in a private worklog. Public results are intentionally rounded and should not be treated as a universal benchmark.
+These results supported a production strategy based on staged metrics, deterministic candidate reduction, explicit block reasons, and selective automation coverage. The figures are rounded project evidence and must not be treated as a universal benchmark.
+
+Detailed organisation, supplier, dataset, financial-rule, source-code, and implementation information remains in a private worklog.
 
 ## Problem and business context
 
@@ -49,13 +64,13 @@ This was not only an OCR problem. The difficult work was reconciling untrusted d
 
 ### In scope
 
-- Email/PDF ingestion
+- Email and PDF ingestion
 - Header and line extraction
 - Supplier resolution
 - Purchase-order and receipt retrieval
 - Bounded semantic matching
 - Structured output and deterministic validation
-- Reversible ERP preparation/parking
+- Reversible ERP preparation or parking
 - Human review and explicit block reasons
 - Batch evaluation, checkpointing, tracing, and cost analysis
 
@@ -88,7 +103,7 @@ Known business sequence
 + human approval
 ```
 
-Anthropic's official agent guidance distinguishes predefined workflows from agents that dynamically direct their own process and recommends starting with the simplest architecture that meets the need. That principle aligned with the project evidence: modular model-assisted stages were useful, but broad autonomy was not required.
+Current Anthropic agent guidance distinguishes predefined workflows from agents that dynamically direct their own process and recommends starting with the simplest architecture that meets the need. The project evidence supported that approach: modular model-assisted stages were useful, but broad autonomy was not required.
 
 ## Architecture
 
@@ -99,10 +114,10 @@ flowchart TB
     B --> D[Extract email evidence]
     C --> E[Resolve supplier candidates]
     D --> E
-    E --> F[Retrieve ERP PO, item and receipt records]
+    E --> F[Retrieve ERP PO item and receipt records]
     F --> G[Deterministic candidate reduction]
     G --> H[Bounded model-assisted matching]
-    H --> I[Schema, arithmetic and referential validation]
+    H --> I[Schema arithmetic and referential validation]
     I --> J{Policy gate}
     J -->|Safe| K[Build validated ERP payload]
     K --> L[Park reversible transaction]
@@ -133,14 +148,14 @@ Durable rules were separated from prompt wording.
 
 | Rule | Type | Evidence source | Failure action |
 |---|---|---|---|
-| Document and credit-note classification | Mixed | Document evidence plus approved mapping | Review unsupported/ambiguous cases |
-| Supplier resolution | Hierarchical | Valid PO relationship, trusted email evidence, exact/normalised match, bounded ranking | Unresolved state |
+| Document and credit-note classification | Mixed | Document evidence plus approved mapping | Review unsupported or ambiguous cases |
+| Supplier resolution | Hierarchical | Valid PO relationship, trusted email evidence, exact or normalised match, bounded ranking | Unresolved state |
 | PO validity | Deterministic | ERP | Block invalid references |
-| Item/receipt candidate set | Deterministic retrieval | ERP | Block when required evidence is absent |
+| Item and receipt candidate set | Deterministic retrieval | ERP | Block when required evidence is absent |
 | Ambiguous line matching | Probabilistic inside bounded candidates | Document plus ERP candidates | Validate or review |
-| Totals and remaining value | Deterministic | Document arithmetic and ERP values | Block on mismatch/exceedance |
-| Service and receipt behavior | Deterministic policy | Approved purchasing rules | Block or approved exception path |
-| Freight treatment | Contextual rule | Invoice structure and PO policy | Prevent omission/double count |
+| Totals and remaining value | Deterministic | Document arithmetic and ERP values | Block on mismatch or exceedance |
+| Service and receipt behaviour | Deterministic policy | Approved purchasing rules | Block or approved exception path |
+| Freight treatment | Contextual rule | Invoice structure and PO policy | Prevent omission or double count |
 | Downstream action | Deterministic policy | Risk boundary | Park only; review uncertainty |
 
 ### Evidence hierarchy
@@ -148,14 +163,14 @@ Durable rules were separated from prompt wording.
 ```text
 Authoritative ERP record
 > approved deterministic business rule
-> exact document/email evidence
+> exact document or email evidence
 > bounded model inference
 > unsupported assumption
 ```
 
 The model could rank or map valid candidates; it could not create source-system facts.
 
-## Implementation process
+## Implementation history
 
 ### Phase 1: broad automation goal
 
@@ -163,7 +178,7 @@ The initial design targeted both header extraction and detailed PO line allocati
 
 ### Phase 2: modular pipeline
 
-The solution separated document extraction, email enrichment, supplier resolution, PO retrieval/matching, validation, and payload construction. Structured intermediate state made stage-level testing possible.
+The solution separated document extraction, email enrichment, supplier resolution, PO retrieval and matching, validation, and payload construction. Structured intermediate state made stage-level testing possible.
 
 ### Phase 3: evidence-driven controls
 
@@ -173,7 +188,7 @@ Historical testing showed a large performance difference between header extracti
 - hard matches before semantic ranking;
 - remaining-value and service-policy checks;
 - explicit unsupported and blocked statuses;
-- park-first behavior;
+- park-first behaviour;
 - checkpointed batch results;
 - per-stage token and failure analysis.
 
@@ -193,7 +208,7 @@ The evaluation separated:
 
 1. header field extraction;
 2. supplier resolution;
-3. PO retrieval/validation;
+3. PO retrieval and validation;
 4. line and receipt matching;
 5. payload validity;
 6. end-to-end business outcome;
@@ -203,7 +218,7 @@ The evaluation separated:
 
 - Header extraction exceeded 90% on the internal set.
 - Full end-to-end automation was materially lower than header-only extraction.
-- Purchase-order matching consumed the majority of model context/cost.
+- Purchase-order matching consumed the majority of model context and cost.
 - Long-tail suppliers and special purchasing cases caused disproportionate failures.
 
 ### Why one accuracy number was insufficient
@@ -215,9 +230,9 @@ A correct invoice number and total do not prove that the selected supplier, PO, 
 - Restrict model access to bounded inputs and candidate records.
 - Keep ERP mutation behind application-controlled tools and validation.
 - Use least privilege and managed identity where the current platform supports it.
-- Store secrets outside prompts, source code, and configuration committed to Git.
-- Redact documents, emails, suppliers, and model/tool payloads from logs and traces unless explicitly required and protected.
-- Treat document/email content as possible prompt-injection input; do not allow it to redefine system policy or tool permissions.
+- Store secrets outside prompts, source code, and committed configuration.
+- Redact documents, emails, suppliers, and model or tool payloads from logs and traces unless explicitly required and protected.
+- Treat document and email content as possible prompt-injection input; do not allow it to redefine system policy or tool permissions.
 - Require human approval for consequential or uncertain actions.
 - Version prompts, schemas, rules, models, and evaluation datasets.
 
@@ -227,12 +242,12 @@ The project used persistent per-document result records to support:
 
 - checkpoint and resume;
 - explicit terminal status;
-- stage output inspection;
-- token/cost analysis;
+- stage-output inspection;
+- token and cost analysis;
 - failure-category aggregation;
-- comparison across prompt/rule/model versions.
+- comparison across prompt, rule, and model versions.
 
-A production implementation should also include correlation IDs, bounded retries, timeout/backoff, idempotent downstream writes, dead-letter/quarantine paths, and redacted end-to-end tracing.
+A production implementation should also include correlation IDs, bounded retries, timeout and backoff, idempotent downstream writes, dead-letter or quarantine paths, and redacted end-to-end tracing.
 
 ## What worked
 
@@ -249,62 +264,74 @@ A production implementation should also include correlation IDs, bounded retries
 - Large PO candidate contexts increased cost and ambiguity.
 - Repeated model calls did not fix missing source-system evidence.
 - Header quality could create false confidence about end-to-end readiness.
-- A universal prompt did not solve the supplier/document long tail.
+- A universal prompt did not solve the supplier and document long tail.
 - Business rules embedded only in prompts were harder to govern and test.
 
-## Reusable patterns
+## Reusable knowledge
 
 - [Bounded Document Automation Workflow](../10-patterns/bounded-document-automation-workflow.md)
 - [ADR-001: Use a bounded workflow over an autonomous agent](../decisions/ADR-001-use-bounded-workflow-over-autonomous-agent.md)
 
 Additional patterns supported by the case:
 
-- Deterministic-first candidate reduction
-- Evidence hierarchy and source-system grounding
-- Confidence-and-policy-gated human review
-- Draft/park-before-commit
-- Stage-level evaluation
-- Failure-aware retry
+- deterministic-first candidate reduction;
+- evidence hierarchy and source-system grounding;
+- confidence-and-policy-gated human review;
+- draft or park before commit;
+- stage-level evaluation;
+- failure-aware retry.
 
 ## Best-practice mapping
 
 | Project decision | Evidence label | Current primary source | Alignment or gap |
 |---|---|---|---|
-| Use fixed orchestration with bounded model stages | Official recommendation + project evidence | Anthropic, *Building effective agents* | Aligns with using workflows for well-defined tasks and adding complexity only when justified |
-| Event-driven document extraction, schema mapping, quality checks, and human validation | Reference architecture | Microsoft Azure Architecture Center, *Extract and map information from unstructured content* | Strong conceptual alignment; the historical project used its own implementation stack |
-| Use document extraction/OCR as one component of a larger intelligent-document-processing pipeline | Official product guidance | Microsoft Document Intelligence documentation | Aligns; OCR alone did not solve ERP matching and policy |
-| Run quality/safety evaluation against datasets and inspect sample-level results | Official recommendation | Microsoft Foundry evaluation guidance | Future implementation should formalise versioned evaluation runs and gates |
-| Constrain outputs with schemas and validate before action | Official recommendation | OpenAI structured outputs guidance | Aligns conceptually; deterministic business validation remains required beyond schema compliance |
-| Continuously expand evaluation data with discovered edge cases | Official recommendation | OpenAI evaluation best practices and Datasets guidance | Aligns with adding production overrides and long-tail failures to regression suites |
-| Evaluate multi-step behavior and intermediate failures | Official recommendation | Anthropic, *Demystifying evals for AI agents* | Aligns with stage-level and failure-category evaluation |
+| Use fixed orchestration with bounded model stages | Official recommendation plus project evidence | Anthropic, *Building effective agents* | Aligns with workflows for well-defined tasks and adding complexity only when justified |
+| Event-driven document extraction, schema mapping, quality checks, and human validation | Reference architecture | Microsoft Azure Architecture Center, multimodal content processing | Strong conceptual alignment; the historical project used its own implementation stack |
+| Use document extraction as one component of a larger processing pipeline | Official product guidance | Microsoft Document Intelligence documentation | OCR alone did not solve ERP matching and policy |
+| Run quality and safety evaluation against datasets | Official recommendation | Microsoft Foundry evaluation guidance | A current implementation should formalise versioned evaluation runs and gates |
+| Constrain outputs with schemas and validate before action | Official recommendation | OpenAI structured outputs guidance | Deterministic business validation remains required beyond schema compliance |
+| Expand evaluation data with discovered edge cases | Official recommendation | OpenAI evaluation best practices | Aligns with adding long-tail failures and human corrections to regression suites |
+| Evaluate multi-step behaviour and intermediate failures | Official recommendation | Anthropic agent-evaluation guidance | Applicable even when the system is a workflow rather than an autonomous agent |
 
 ## How to build it today
 
-A new implementation should preserve the pattern but re-evaluate the products and APIs:
+A new implementation should preserve the pattern but re-evaluate products and APIs:
 
-1. Use the current generally available Microsoft document-processing service that best matches the document types; verify the current Document Intelligence/Content Understanding boundary and API lifecycle.
+1. Select the current generally available document-processing service that best matches the document types and data boundary.
 2. Use event-driven orchestration with explicit state, idempotency, retry policy, quarantine, and human-review queues.
 3. Use structured outputs for model contracts, followed by deterministic domain validation.
 4. Retrieve and reduce ERP candidates before semantic matching.
 5. Build an evaluation dataset and stage-level graders before broadening automation coverage.
-6. Treat current platform evaluation tooling as versioned and changeable. For example, OpenAI's official documentation marks its legacy Evals platform for retirement in 2026 and directs new iterative work toward current dataset/evaluation workflows; do not encode a long-lived playbook around an obsolete product name.
-7. Redact sensitive input/output from tracing and logs by default.
-8. Expand from park/draft to more autonomous action only after a business-approved risk assessment and strong false-auto-accept evidence.
+6. Verify the current evaluation APIs, SDKs, product names, and lifecycle directly from official documentation before implementation; do not encode a long-lived architecture around an assumed interface or unverified retirement claim.
+7. Redact sensitive input and output from tracing and logs by default.
+8. Expand from park or draft to more autonomous action only after business-approved risk assessment and strong false-auto-accept evidence.
+
+## Publication and sanitisation record
+
+- Organisation and customer identifiers removed: yes
+- Supplier-specific details removed or generalised: yes
+- Internal endpoints and account identifiers removed: yes
+- Raw documents and messages removed: yes
+- Confidential thresholds and rules generalised: yes
+- Metrics rounded where appropriate: yes
+- Detailed evidence retained only in private worklog: yes
 
 ## Limitations and open questions
 
-- The case does not publish the underlying documents, prompts, source code, or supplier-specific rules.
+- The case does not publish underlying documents, prompts, source code, or supplier-specific rules.
 - Rounded project results cannot be compared directly with other organisations or datasets.
 - The internal evaluation should be formalised with immutable dataset manifests and versioned holdouts before making stronger benchmark claims.
 - A future implementation should test whether improved deterministic retrieval can reduce the expensive matching stage enough to change the architecture.
+- All product and lifecycle claims require re-verification at implementation time.
 
 ## Sources
 
-- Microsoft Azure Architecture Center: https://learn.microsoft.com/en-us/azure/architecture/ai-ml/idea/multi-modal-content-processing
-- Microsoft Document Intelligence: https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0
-- Microsoft Foundry evaluation: https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluate-generative-ai-app
-- Anthropic, Building effective agents: https://www.anthropic.com/engineering/building-effective-agents
-- Anthropic, Demystifying evals for AI agents: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
-- OpenAI structured outputs: https://developers.openai.com/api/docs/guides/structured-outputs
-- OpenAI evaluation best practices: https://developers.openai.com/api/docs/guides/evaluation-best-practices
-- OpenAI Datasets/evaluation getting started: https://developers.openai.com/api/docs/guides/evaluation-getting-started
+| ID | Source | Evidence | Supports | Checked on | Lifecycle/version |
+|---|---|---|---|---|---|
+| SRC-001 | https://learn.microsoft.com/en-us/azure/architecture/ai-ml/idea/multi-modal-content-processing | reference-architecture | Document-processing pipeline and human validation | 2026-07-27 | Recheck before implementation |
+| SRC-002 | https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0 | official | Document extraction capability | 2026-07-27 | Recheck service boundary and API version |
+| SRC-003 | https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluate-generative-ai-app | official | Dataset-based evaluation | 2026-07-27 | Recheck current tooling |
+| SRC-004 | https://www.anthropic.com/engineering/building-effective-agents | official | Workflow versus agent selection | 2026-07-27 | Current at verification date |
+| SRC-005 | https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents | official | Multi-step and intermediate evaluation | 2026-07-27 | Current at verification date |
+| SRC-006 | https://developers.openai.com/api/docs/guides/structured-outputs | official | Structured output contracts | 2026-07-27 | Recheck current API guidance |
+| SRC-007 | https://developers.openai.com/api/docs/guides/evaluation-best-practices | official | Evaluation best practices | 2026-07-27 | Recheck current tooling |
