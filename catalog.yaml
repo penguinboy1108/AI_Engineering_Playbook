@@ -1,0 +1,257 @@
+schema_version: "1.0"
+catalog_updated: 2026-08-07
+
+entries:
+  - id: bounded-document-automation-case-study
+    path: 09-case-studies/enterprise-accounts-payable-automation.md
+    title: Bounded AI Workflow for Enterprise Accounts Payable Automation
+    content_type: case-study
+    document_status: current
+    evidence_status: project-validated
+    product_lifecycle: mixed
+    last_verified: 2026-07-27
+    next_review_due: 2026-10-27
+    review_frequency: quarterly
+    metadata_source: front-matter
+    canonical_for:
+      - bounded-document-automation
+    retrieval:
+      default_grounding: true
+      priority: 70
+      role: supporting-evidence
+    topics:
+      - document-processing
+      - workflow-orchestration
+      - structured-output
+      - human-in-the-loop
+      - evaluation
+      - erp-integration
+    vendors:
+      - microsoft
+      - anthropic
+      - openai
+    related:
+      - bounded-document-automation-pattern
+      - adr-001-bounded-workflow
+    supersedes: []
+    superseded_by: []
+
+  - id: bounded-document-automation-pattern
+    path: 10-patterns/bounded-document-automation-workflow.md
+    title: Bounded Document Automation Workflow
+    content_type: pattern
+    document_status: current
+    evidence_status: official-plus-project-evidence
+    product_lifecycle: mixed
+    last_verified: 2026-07-27
+    next_review_due: 2026-10-27
+    review_frequency: quarterly
+    metadata_source: front-matter
+    canonical_for:
+      - bounded-document-automation
+    retrieval:
+      default_grounding: true
+      priority: 95
+      role: primary
+    topics:
+      - document-processing
+      - workflow-orchestration
+      - structured-output
+      - human-in-the-loop
+      - evaluation
+      - reliability
+      - security
+    vendors:
+      - microsoft
+      - anthropic
+      - openai
+    related:
+      - bounded-document-automation-case-study
+      - adr-001-bounded-workflow
+    supersedes: []
+    superseded_by: []
+
+  - id: adr-001-bounded-workflow
+    path: decisions/ADR-001-use-bounded-workflow-over-autonomous-agent.md
+    title: Use a Bounded Workflow Over an Autonomous Agent
+    content_type: adr
+    document_status: current
+    evidence_status: official-plus-project-evidence
+    product_lifecycle: not-applicable
+    last_verified: 2026-07-27
+    next_review_due: 2026-10-27
+    review_frequency: quarterly
+    metadata_source: front-matter
+    canonical_for:
+      - bounded-document-automation
+    retrieval:
+      default_grounding: true
+      priority: 85
+      role: decision-context
+    topics:
+      - workflow-orchestration
+      - agent-architecture
+      - human-in-the-loop
+      - risk-control
+    vendors:
+      - microsoft
+      - anthropic
+    related:
+      - bounded-document-automation-pattern
+      - bounded-document-automation-case-study
+    supersedes: []
+    superseded_by: []
+
+  - id: agent-capability-containment
+    path: 07-security/agent-capability-containment.md
+    title: Agent Capability Containment
+    content_type: guide
+    document_status: current
+    evidence_status: official
+    product_lifecycle: not-applicable
+    last_verified: 2026-07-30
+    next_review_due: 2026-10-30
+    review_frequency: quarterly
+    metadata_source: front-matter
+    canonical_for:
+      - agent-capability-containment
+    retrieval:
+      default_grounding: true
+      priority: 95
+      role: primary
+    topics:
+      - agent-security
+      - least-privilege
+      - sandboxing
+      - network-egress
+      - trust-boundary
+    vendors:
+      - anthropic
+    related: []
+    supersedes: []
+    superseded_by: []
+
+  - id: sdk-version-and-default-control
+    path: 08-production/sdk-version-and-default-control.md
+    title: SDK Version and Default Control
+    content_type: guide
+    document_status: current
+    evidence_status: official
+    product_lifecycle: mixed
+    last_verified: 2026-07-30
+    next_review_due: 2026-08-30
+    review_frequency: monthly
+    metadata_source: front-matter
+    canonical_for:
+      - agent-sdk-version-control
+    retrieval:
+      default_grounding: true
+      priority: 95
+      role: primary
+    topics:
+      - agent-sdk
+      - dependency-management
+      - regression-testing
+      - runtime-provenance
+      - production-reliability
+    vendors:
+      - openai
+    related: []
+    supersedes: []
+    superseded_by: []
+
+  - id: specification-driven-ai-coding
+    path: docs/workflows/specification-driven-ai-coding.md
+    title: Specification-Driven AI Coding and Harness Engineering
+    content_type: guide
+    document_status: current
+    evidence_status: official-plus-project-evidence
+    product_lifecycle: not-applicable
+    last_verified: 2026-07-31
+    next_review_due: 2026-10-31
+    review_frequency: quarterly
+    metadata_source: catalog
+    canonical_for:
+      - specification-driven-ai-coding
+      - harness-engineering
+    retrieval:
+      default_grounding: true
+      priority: 95
+      role: primary
+    topics:
+      - prd
+      - bdd
+      - tdd
+      - ai-coding
+      - harness-engineering
+      - software-delivery
+    vendors:
+      - microsoft
+      - anthropic
+      - openai
+    related: []
+    supersedes: []
+    superseded_by: []
+
+  - id: weekly-digest-2026-07-30
+    path: weekly-digests/2026/2026-07-30.md
+    title: AI Engineering Weekly Digest — 2026-07-30
+    content_type: digest
+    document_status: current
+    evidence_status: official
+    product_lifecycle: mixed
+    last_verified: 2026-07-30
+    next_review_due: 2026-08-30
+    review_frequency: monthly
+    metadata_source: front-matter
+    canonical_for: []
+    retrieval:
+      default_grounding: false
+      priority: 20
+      role: recent-change-record
+    topics:
+      - weekly-research
+      - product-updates
+      - agent-security
+      - sdk-lifecycle
+      - certification
+    vendors:
+      - microsoft
+      - anthropic
+      - openai
+    related:
+      - agent-capability-containment
+      - sdk-version-and-default-control
+    supersedes: []
+    superseded_by: []
+
+  - id: weekly-digest-2026-08-06
+    path: weekly-digests/2026/2026-08-06.md
+    title: AI Engineering Weekly Digest — 2026-08-06
+    content_type: digest
+    document_status: current
+    evidence_status: official
+    product_lifecycle: mixed
+    last_verified: 2026-08-06
+    next_review_due: 2026-09-06
+    review_frequency: monthly
+    metadata_source: catalog
+    canonical_for: []
+    retrieval:
+      default_grounding: false
+      priority: 20
+      role: recent-change-record
+    topics:
+      - weekly-research
+      - product-updates
+      - agent-sdk
+      - regression-testing
+      - certification
+    vendors:
+      - microsoft
+      - anthropic
+      - openai
+    related:
+      - sdk-version-and-default-control
+    supersedes: []
+    superseded_by: []

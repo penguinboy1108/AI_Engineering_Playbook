@@ -1,0 +1,115 @@
+schema_version: "1.0"
+
+cases:
+  - id: missing-authoritative-evidence-is-not-retryable
+    query_zh: >-
+      一个 Agent 已经多次重试，但底层业务系统里没有需要的记录，
+      应该继续重试吗？
+    intent: production-design
+    expected_primary_paths:
+      - 10-patterns/bounded-document-automation-workflow.md
+    expected_supporting_paths: []
+    forbidden_default_paths:
+      - weekly-digests/2026/2026-07-30.md
+    required_concepts:
+      - distinguish transient failure from missing business evidence
+      - do not retry when no new evidence can appear
+      - block, request data, or route to human review
+    required_answer_behaviour:
+      - answer in Simplified Chinese
+      - identify the playbook path and last_verified date
+      - distinguish project evidence from general recommendation
+
+  - id: defined-financial-process-workflow-versus-agent
+    query_zh: >-
+      一个财务文档流程顺序明确，但部分匹配步骤需要语义判断，
+      应该用自治 Agent 还是代码控制的工作流？
+    intent: architecture-decision
+    expected_primary_paths:
+      - 10-patterns/bounded-document-automation-workflow.md
+    expected_supporting_paths:
+      - decisions/ADR-001-use-bounded-workflow-over-autonomous-agent.md
+      - 09-case-studies/enterprise-accounts-payable-automation.md
+    forbidden_default_paths:
+      - weekly-digests/2026/2026-07-30.md
+    required_concepts:
+      - deterministic orchestration
+      - bounded model tasks
+      - source-system grounding
+      - typed validation
+      - reversible action and human review
+    forbidden_claims:
+      - autonomous agents are always unsafe
+      - project accuracy is a universal benchmark
+
+  - id: current-agent-sdk-defaults
+    query_zh: >-
+      我准备升级生产环境里的 Agent SDK，可以直接放宽版本范围并沿用默认模型吗？
+    intent: current-production-guidance
+    expected_primary_paths:
+      - 08-production/sdk-version-and-default-control.md
+    expected_supporting_paths: []
+    forbidden_default_paths:
+      - weekly-digests/2026/2026-07-30.md
+    required_concepts:
+      - pin or lock production dependencies
+      - configure model and behaviour explicitly
+      - regression-test success and failure paths
+      - record runtime provenance
+    required_answer_behaviour:
+      - recheck current official SDK documentation before making version-specific claims
+      - state when repository guidance was last verified
+
+  - id: recent-weekly-change-summary
+    query_zh: >-
+      最近一轮 AI engineering 研究更新了什么，哪些内容已经进入长期 Playbook？
+    intent: recent-changes
+    expected_primary_paths:
+      - weekly-digests/2026/2026-07-30.md
+    expected_supporting_paths:
+      - 07-security/agent-capability-containment.md
+      - 08-production/sdk-version-and-default-control.md
+    forbidden_default_paths: []
+    required_concepts:
+      - digest is a research record
+      - distinguish promoted durable guidance from no-action items
+      - explain production impact
+
+  - id: case-study-metric-boundary
+    query_zh: >-
+      你们案例里 Header extraction 超过 90%，这是否证明文档自动化整体能达到 90%？
+    intent: evidence-interpretation
+    expected_primary_paths:
+      - 10-patterns/bounded-document-automation-workflow.md
+    expected_supporting_paths:
+      - 09-case-studies/enterprise-accounts-payable-automation.md
+    forbidden_default_paths:
+      - weekly-digests/2026/2026-07-30.md
+    required_concepts:
+      - stage-level metrics differ from end-to-end correctness
+      - false-auto-accept matters
+      - project results are dataset-specific and rounded
+    forbidden_claims:
+      - the project result is a general industry benchmark
+      - correct OCR proves correct downstream transaction
+
+  - id: specification-driven-ai-coding
+    query_zh: >-
+      我让 coding agent 实现一个涉及权限和状态机的功能，
+      最小但可靠的 PRD、BDD、TDD 和 harness 流程应该是什么？
+    intent: implementation-workflow
+    expected_primary_paths:
+      - docs/workflows/specification-driven-ai-coding.md
+    expected_supporting_paths: []
+    forbidden_default_paths:
+      - weekly-digests/2026/2026-07-30.md
+    required_concepts:
+      - risk-based specification depth
+      - concrete acceptance examples
+      - test-first for critical deterministic logic
+      - bounded plan and verification evidence
+      - checkpoint and recovery
+      - human ownership of high-impact decisions
+    required_answer_behaviour:
+      - answer in Simplified Chinese while preserving important English terms
+      - provide a practical sequence rather than only definitions
