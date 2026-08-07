@@ -19,6 +19,7 @@ Existing directory numbers are kept stable. New planned areas use unique numbers
 11-anti-patterns/            Repeated failure modes and unsafe designs
 12-reference-architectures/  End-to-end reusable production designs
 decisions/                   Architecture Decision Records
+docs/contributing/           Authoring, review, and private-evidence extraction guidance
 docs/workflows/              Cross-lifecycle engineering and delivery practices
 weekly-digests/              Time-stamped research and change summaries
 evals/                       Retrieval and answer-behaviour specifications
@@ -57,6 +58,8 @@ Canonical guide or reference architecture
 
 A case study records what happened in a specific project. A pattern states a reusable solution and its trade-offs. An ADR records why one option was chosen over alternatives. A reference architecture combines several current patterns into an end-to-end design. These content types must not be collapsed into a single “best practice” page.
 
+Private evidence should first pass through a playbook-candidate review in `AI_Engineering_Worklog`, then follow [Extracting Public Guidance from a Private Worklog](docs/contributing/from-private-worklog.md). Public entries must be independently understandable and must not expose or depend on private repository links.
+
 ## Retrieval layers
 
 ```text
@@ -76,6 +79,7 @@ Recent-change records only when requested
 ### Practice guides
 
 - [Specification-Driven AI Coding and Harness Engineering](docs/workflows/specification-driven-ai-coding.md)
+- [Extracting Public Guidance from a Private Worklog](docs/contributing/from-private-worklog.md)
 - [Agent Capability Containment](07-security/agent-capability-containment.md)
 - [SDK Version and Default Control](08-production/sdk-version-and-default-control.md)
 
