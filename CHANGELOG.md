@@ -15,6 +15,7 @@ All meaningful playbook changes are recorded here.
 - Pinned validation dependencies in `requirements-validation.txt`.
 - Pull-request evidence, lifecycle, sanitisation, and validation checklist.
 - Initial retrieval evaluation cases covering canonical selection, digest exclusion, project-evidence boundaries, current-source verification, and Chinese answers.
+- Weekly digest for 2026-08-06 covering Microsoft Agent Framework release progression, OpenAI Agents SDK state and boundary fixes, and the state-machine upgrade firewall pattern.
 
 ### Changed
 
@@ -36,6 +37,8 @@ All meaningful playbook changes are recorded here.
 - Add an executable retrieval/evaluation runner for `evals/retrieval-cases.yaml` after selecting the indexing stack.
 - Confirm branch-protection settings require the content-quality workflow before merge.
 - Review remaining existing pages for unsupported or ambiguous lifecycle claims during the next source audit.
+- Release verification for OpenAI Agents SDK main-branch state, tracing, MCP, validation-redaction, and sandbox fixes reviewed on 2026-08-06.
+- Package-level migration review before adopting Microsoft Agent Framework Python 1.13.0 or .NET 1.17.0.
 
 ## 2026-08-02
 

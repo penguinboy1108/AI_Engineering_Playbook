@@ -1,5 +1,5 @@
 schema_version: "1.0"
-catalog_updated: 2026-08-03
+catalog_updated: 2026-08-07
 
 entries:
   - id: bounded-document-automation-case-study
@@ -221,6 +221,37 @@ entries:
       - openai
     related:
       - agent-capability-containment
+      - sdk-version-and-default-control
+    supersedes: []
+    superseded_by: []
+
+  - id: weekly-digest-2026-08-06
+    path: weekly-digests/2026/2026-08-06.md
+    title: AI Engineering Weekly Digest — 2026-08-06
+    content_type: digest
+    document_status: current
+    evidence_status: official
+    product_lifecycle: mixed
+    last_verified: 2026-08-06
+    next_review_due: 2026-09-06
+    review_frequency: monthly
+    metadata_source: catalog
+    canonical_for: []
+    retrieval:
+      default_grounding: false
+      priority: 20
+      role: recent-change-record
+    topics:
+      - weekly-research
+      - product-updates
+      - agent-sdk
+      - regression-testing
+      - certification
+    vendors:
+      - microsoft
+      - anthropic
+      - openai
+    related:
       - sdk-version-and-default-control
     supersedes: []
     superseded_by: []
