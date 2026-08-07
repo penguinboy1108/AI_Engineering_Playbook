@@ -12,6 +12,7 @@ The primary use case is practical problem solving: when a real project becomes d
 - [Source and evidence policy](SOURCE_POLICY.md)
 - [Repository governance](GOVERNANCE.md)
 - [Repository map](PLAYBOOK_MAP.md)
+- [Extracting public guidance from a private worklog](docs/contributing/from-private-worklog.md)
 - [Chinese terminology glossary](GLOSSARY.zh-CN.md)
 
 ## Source priority
@@ -54,6 +55,8 @@ Canonical production guide or reference architecture
 
 A weekly digest is a time-stamped research record. It is not automatically a permanent recommendation. Durable guidance is promoted only after evidence review.
 
+Private evidence should first pass through a playbook-candidate review in `AI_Engineering_Worklog`, then follow [Extracting Public Guidance from a Private Worklog](docs/contributing/from-private-worklog.md). Public entries must be independently understandable and must not expose or depend on private repository links.
+
 ## Retrieval model
 
 `catalog.yaml` is the machine-readable index. Each entry records:
@@ -83,6 +86,7 @@ Deprecated, superseded, archived, experimental, and unverified content is exclud
 ### Practice guides
 
 - [Specification-Driven AI Coding and Harness Engineering](docs/workflows/specification-driven-ai-coding.md)
+- [Extracting Public Guidance from a Private Worklog](docs/contributing/from-private-worklog.md)
 - [Agent Capability Containment](07-security/agent-capability-containment.md)
 - [SDK Version and Default Control](08-production/sdk-version-and-default-control.md)
 
