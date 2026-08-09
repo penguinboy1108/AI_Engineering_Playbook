@@ -26,28 +26,23 @@ A production deployment should not silently change because an SDK release change
 - refusal handling;
 - tool error propagation;
 - handoff history;
-- synchronous execution semantics;
 - supported runtime versions;
 - MCP session behaviour;
-- sandbox path or materialisation rules.
+- sandbox path or materialisation rules;
+- retry, session or provider behaviour.
 
 ## Current verification snapshot
 
 As verified on **2026-08-09**, the OpenAI Agents SDK release documentation still uses modified semantic versioning in the form `0.Y.Z`:
 
-- minor `Y` releases may include breaking changes to public non-beta interfaces;
-- patch `Z` releases are intended for non-breaking changes;
-- the official changelog currently includes releases through `0.18.0`;
-- `0.18.0` changed the default Realtime model to `gpt-realtime-2.1` without an interface-breaking change;
-- recent minor releases also changed sandbox boundaries, runtime support, MCP behaviour, handoff behaviour and model defaults.
+- minor `Y` releases can include breaking changes to public non-beta interfaces;
+- patch `Z` releases are intended for non-breaking changes, new features, private-interface changes and beta updates;
+- the official changelog currently includes releases through `0.19.0`;
+- `0.19.0` adds Programmatic Tool Calling and further changes configuration, retries, session history, provider compatibility, sandbox mounts and sensitive diagnostic logging;
+- `0.18.0` changed the default Realtime model to `gpt-realtime-2.1`;
+- earlier recent releases changed default models, refusal handling, sandbox boundaries, runtime support, MCP behaviour and handoff behaviour.
 
-The exact latest version is a point-in-time observation, not a durable recommendation. Always re-check the official changelog before upgrading.
-
-## Why this matters
-
-Even when an API remains source-compatible, a changed model default or error path can alter quality, latency, cost, retries, security boundaries and user-visible outcomes.
-
-A minor version may be used for a default change even when no public interface is broken. Therefore, do not assume that "no breaking API change" means "no behavioural change."
+The exact latest version is a point-in-time observation, not a durable recommendation. Re-check the official changelog before every upgrade.
 
 ## Required controls
 
@@ -61,21 +56,17 @@ openai-agents==0.Y.Z
 
 Do not use an unconstrained dependency such as `>=0.Y` in a production service.
 
-### Configure models explicitly
+### Configure behaviour explicitly
 
-Set the production model in configuration rather than relying on SDK defaults.
+Set the production model and behaviour-bearing options in configuration rather than relying on SDK defaults, including:
 
-Also make explicit any behaviour that affects quality or cost, including:
-
-- reasoning effort;
-- verbosity;
-- temperature where supported;
-- turn limits;
-- timeout and retry policy;
-- tool failure handling;
+- reasoning effort and verbosity;
+- turn limits, timeout and retry policy;
+- tool failure and refusal handling;
 - handoff-history behaviour;
 - Realtime transport and model;
-- sandbox grants and materialisation roots.
+- sandbox grants, mounts and materialisation roots;
+- session persistence and provider-specific retry behaviour.
 
 ### Separate upgrade from deployment
 
@@ -90,72 +81,48 @@ An SDK upgrade should be a reviewed change with:
 7. canary or staged deployment;
 8. rollback plan.
 
-### Test failure semantics
+### Test failure and state semantics
 
-Regression suites should explicitly cover:
+Regression suites should cover:
 
-- model refusal;
-- malformed structured output;
-- tool timeout and tool error;
-- MCP disconnect and reconnection;
-- maximum-turn handling;
-- cancellation;
-- handoff context;
+- model refusal and malformed structured output;
+- tool timeout, tool error and duplicate calls;
+- MCP disconnect, reconnect and resource enumeration;
+- cancellation, maximum turns and provider retries;
+- handoff context and session-history preservation;
 - duplicate or concurrent writes;
-- sandbox path, symlink and archive safety;
-- Realtime session and default-model behaviour where applicable.
+- sandbox path, symlink, archive, mount and resume safety;
+- Realtime session and default-model behaviour.
 
 ### Capture runtime provenance
 
 Each trace or execution record should include:
 
-- application version;
-- SDK version;
-- model identifier;
-- effective model settings;
+- application and SDK version;
+- model identifier and effective settings;
 - prompt and tool-schema version;
 - evaluation or release identifier;
-- sandbox or policy configuration version where tools can modify state.
-
-Without provenance, a behaviour regression cannot be reliably attributed to code, model, prompt, SDK, policy or infrastructure changes.
+- sandbox, mount and policy configuration version where tools can modify state.
 
 ## Upgrade decision table
 
 | Change type | Minimum response |
 |---|---|
-| Patch release with bug fixes | Review notes, run focused regression tests |
+| Patch release | Review notes and run focused regression tests |
 | Minor pre-1.0 release | Treat as potentially interface- or behaviour-breaking; run full regression and staged rollout |
 | Default model change | Set model explicitly; compare quality, latency and cost |
-| Tool or MCP failure change | Re-run failure-path, reconnect and retry tests |
+| Tool, MCP or retry change | Re-run failure-path, reconnect, replay and idempotency tests |
 | Runtime support change | Update CI matrix and deployment image |
 | Refusal or structured-output change | Re-run safety, abstention and schema-recovery tests |
-| Sandbox or path-boundary change | Re-run path traversal, symlink, mount and grant-boundary tests |
-
-## Anti-patterns
-
-### Floating production dependencies
-
-A rebuild can produce different runtime behaviour without a source-code change.
-
-### Implicit default model
-
-A library update can change model quality, cost, latency and reasoning behaviour.
-
-### Happy-path-only upgrade testing
-
-Most agent regressions appear in tool errors, refusals, retries, handoffs, state restoration, Realtime sessions and sandbox boundaries rather than simple single-turn responses.
-
-### No version data in traces
-
-Operational incidents become difficult to reproduce or compare.
+| Sandbox, mount or path change | Re-run traversal, symlink, credential, mount and grant-boundary tests |
 
 ## Validation checklist
 
 - [ ] Production SDK and transitive dependencies are locked.
 - [ ] Model and important model settings are explicit.
 - [ ] Upgrade PRs link to official release notes.
-- [ ] Behavioural evals cover success and failure paths.
-- [ ] Sandbox and tool-boundary changes receive security regression tests.
+- [ ] Behavioural evals cover success, failure and state-restoration paths.
+- [ ] Sandbox, mount and tool-boundary changes receive security regression tests.
 - [ ] Cost and latency are compared before rollout.
 - [ ] Traces include SDK, model, prompt, tool-schema and policy versions.
 - [ ] A rollback path is tested.
