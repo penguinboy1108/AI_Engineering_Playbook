@@ -6,6 +6,9 @@ All meaningful playbook changes are recorded here.
 
 ### Added
 
+- Verified AI-103 objective map using the April 16, 2026 official exam blueprint.
+- Monthly verification report for 2026-08-09.
+- Lifecycle registry entries for Azure OpenAI Assistants API (classic), the current Foundry Models Azure AI Inference beta SDK surface, Foundry Workflows, Foundry Agents (classic), and Prompt Flow.
 - Root `AGENTS.md` contract for retrieval order, Chinese answer behaviour, evidence handling, current-source verification, confidentiality, and repository modification.
 - `GPT_USAGE.md` for using the repository as grounded context during real engineering problem solving.
 - `GLOSSARY.zh-CN.md` for stable Chinese explanations without maintaining duplicate bilingual canonical pages.
@@ -19,6 +22,8 @@ All meaningful playbook changes are recorded here.
 
 ### Changed
 
+- Corrected AI-103 domain weights to the current official 25–30%, 30–35%, and three 10–15% domains.
+- Refreshed the OpenAI Agents SDK production-control page through the official `0.19.0` changelog and expanded regression coverage for programmatic tool calling, retries, sessions, mounts and sensitive logging.
 - Standardised source policy around separate document, evidence, and product-lifecycle dimensions.
 - Defined `catalog.yaml` as the retrieval source of truth during front-matter migration.
 - Expanded governance for canonical pages, digests, worklogs, retrieval evals, publication safety, and deprecation evidence.
@@ -29,16 +34,21 @@ All meaningful playbook changes are recorded here.
 
 ### Deprecated
 
-- None.
+- Azure OpenAI Assistants API (classic), retiring 2026-08-26.
+- Azure AI Inference beta SDK for the current Foundry Models endpoint surface, retiring 2026-08-26.
+- Microsoft Foundry Workflows visual experience, retiring 2026-12-01.
+- Microsoft Foundry Agents (classic), retiring 2027-03-31.
+- Prompt Flow in Microsoft Foundry and Azure Machine Learning, retiring 2027-04-20.
 
 ### Needs validation
 
+- Synchronise new certification and monthly-verification entries into `catalog.yaml` during metadata migration.
 - Migrate remaining legacy page front matter to the standard metadata model.
 - Add an executable retrieval/evaluation runner for `evals/retrieval-cases.yaml` after selecting the indexing stack.
 - Confirm branch-protection settings require the content-quality workflow before merge.
 - Review remaining existing pages for unsupported or ambiguous lifecycle claims during the next source audit.
-- Release verification for OpenAI Agents SDK main-branch state, tracing, MCP, validation-redaction, and sandbox fixes reviewed on 2026-08-06.
-- Package-level migration review before adopting Microsoft Agent Framework Python 1.13.0 or .NET 1.17.0.
+- Package-level migration review before adopting Microsoft Agent Framework releases.
+- Verify exact Azure AI Inference retirement dates against the precise package and endpoint surface used by each existing project because older/classic Microsoft pages contain a different date.
 
 ## 2026-08-02
 
