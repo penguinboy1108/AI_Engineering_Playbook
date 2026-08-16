@@ -1,6 +1,6 @@
 ---
 status: current
-last_verified: 2026-08-09
+last_verified: 2026-08-16
 source_priority: official
 vendors:
   - openai
@@ -33,16 +33,15 @@ A production deployment should not silently change because an SDK release change
 
 ## Current verification snapshot
 
-As verified on **2026-08-09**, the OpenAI Agents SDK release documentation still uses modified semantic versioning in the form `0.Y.Z`:
+As verified on **2026-08-16**, the OpenAI Agents SDK release policy still uses modified semantic versioning in the form `0.Y.Z`:
 
 - minor `Y` releases can include breaking changes to public non-beta interfaces;
 - patch `Z` releases are intended for non-breaking changes, new features, private-interface changes and beta updates;
-- the official changelog currently includes releases through `0.19.0`;
-- `0.19.0` adds Programmatic Tool Calling and further changes configuration, retries, session history, provider compatibility, sandbox mounts and sensitive diagnostic logging;
-- `0.18.0` changed the default Realtime model to `gpt-realtime-2.1`;
+- the latest official GitHub release is `v0.21.0`, published 2026-08-15;
+- `v0.21.0` adds provider-neutral deterministic testing utilities for Agent, Sandbox, Realtime and Voice workflows, OpenAI Python v3 compatibility, and additional hardening around interruption snapshots, recursive approvals, MCP lifecycle isolation, retry backoff, sandbox path grants and sensitive-error redaction;
 - earlier recent releases changed default models, refusal handling, sandbox boundaries, runtime support, MCP behaviour and handoff behaviour.
 
-The exact latest version is a point-in-time observation, not a durable recommendation. Re-check the official changelog before every upgrade.
+The exact latest version is a point-in-time observation, not a durable recommendation. Re-check the official release page before every upgrade.
 
 ## Required controls
 
@@ -75,11 +74,12 @@ An SDK upgrade should be a reviewed change with:
 1. changelog and migration-note review;
 2. lockfile diff;
 3. unit and contract tests;
-4. recorded-agent regression evaluation;
-5. cost and latency comparison;
-6. security-boundary review where sandbox, tools or MCP changed;
-7. canary or staged deployment;
-8. rollback plan.
+4. deterministic runtime tests where the SDK supports them;
+5. recorded-agent regression evaluation;
+6. cost and latency comparison;
+7. security-boundary review where sandbox, tools or MCP changed;
+8. canary or staged deployment;
+9. rollback plan.
 
 ### Test failure and state semantics
 
@@ -91,6 +91,7 @@ Regression suites should cover:
 - cancellation, maximum turns and provider retries;
 - handoff context and session-history preservation;
 - duplicate or concurrent writes;
+- interruption, approval and resume state;
 - sandbox path, symlink, archive, mount and resume safety;
 - Realtime session and default-model behaviour.
 
@@ -115,6 +116,7 @@ Each trace or execution record should include:
 | Runtime support change | Update CI matrix and deployment image |
 | Refusal or structured-output change | Re-run safety, abstention and schema-recovery tests |
 | Sandbox, mount or path change | Re-run traversal, symlink, credential, mount and grant-boundary tests |
+| State or approval change | Re-run interruption, resume, replay and checkpoint-isolation tests |
 
 ## Validation checklist
 
@@ -122,16 +124,18 @@ Each trace or execution record should include:
 - [ ] Model and important model settings are explicit.
 - [ ] Upgrade PRs link to official release notes.
 - [ ] Behavioural evals cover success, failure and state-restoration paths.
+- [ ] Deterministic SDK test utilities are used where they improve repeatability without replacing end-to-end provider tests.
 - [ ] Sandbox, mount and tool-boundary changes receive security regression tests.
 - [ ] Cost and latency are compared before rollout.
 - [ ] Traces include SDK, model, prompt, tool-schema and policy versions.
 - [ ] A rollback path is tested.
 
-## Source
+## Sources
 
-**[Official OpenAI SDK release policy and changelog]**
+**[Official OpenAI SDK release policy and releases]**
 
 - https://openai.github.io/openai-agents-python/release/
+- https://github.com/openai/openai-agents-python/releases
 
 ## Scope note
 
