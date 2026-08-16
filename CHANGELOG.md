@@ -7,7 +7,7 @@ All meaningful playbook changes are recorded here.
 ### Added
 
 - Verified AI-103 objective map using the April 16, 2026 official exam blueprint.
-- Monthly verification report for 2026-08-09.
+- Monthly verification reports for 2026-08-09 and 2026-08-16.
 - Lifecycle registry entries for Azure OpenAI Assistants API (classic), the current Foundry Models Azure AI Inference beta SDK surface, Foundry Workflows, Foundry Agents (classic), and Prompt Flow.
 - Root `AGENTS.md` contract for retrieval order, Chinese answer behaviour, evidence handling, current-source verification, confidentiality, and repository modification.
 - `GPT_USAGE.md` for using the repository as grounded context during real engineering problem solving.
@@ -22,8 +22,10 @@ All meaningful playbook changes are recorded here.
 
 ### Changed
 
+- Reverified AI-103 objectives and Anthropic agent-containment guidance on 2026-08-16.
+- Refreshed the OpenAI Agents SDK production-control page against official release `v0.21.0`, including deterministic testing utilities, interruption/approval state isolation, MCP lifecycle isolation, retry backoff, sandbox grants and sensitive-error redaction.
+- Clarified the Azure AI Inference lifecycle discrepancy between the current Foundry Models endpoint page and a classic migration page; project migration planning must verify the exact package and endpoint surface.
 - Corrected AI-103 domain weights to the current official 25–30%, 30–35%, and three 10–15% domains.
-- Refreshed the OpenAI Agents SDK production-control page through the official `0.19.0` changelog and expanded regression coverage for programmatic tool calling, retries, sessions, mounts and sensitive logging.
 - Standardised source policy around separate document, evidence, and product-lifecycle dimensions.
 - Defined `catalog.yaml` as the retrieval source of truth during front-matter migration.
 - Expanded governance for canonical pages, digests, worklogs, retrieval evals, publication safety, and deprecation evidence.
@@ -48,7 +50,7 @@ All meaningful playbook changes are recorded here.
 - Confirm branch-protection settings require the content-quality workflow before merge.
 - Review remaining existing pages for unsupported or ambiguous lifecycle claims during the next source audit.
 - Package-level migration review before adopting Microsoft Agent Framework releases.
-- Verify exact Azure AI Inference retirement dates against the precise package and endpoint surface used by each existing project because older/classic Microsoft pages contain a different date.
+- Verify exact Azure AI Inference retirement dates against the precise package and endpoint surface used by each existing project because current and classic Microsoft pages expose different dates.
 
 ## 2026-08-02
 
