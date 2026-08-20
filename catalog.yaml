@@ -1,5 +1,5 @@
 schema_version: "1.0"
-catalog_updated: 2026-08-07
+catalog_updated: 2026-08-20
 
 entries:
   - id: bounded-document-automation-case-study
@@ -253,5 +253,38 @@ entries:
       - openai
     related:
       - sdk-version-and-default-control
+    supersedes: []
+    superseded_by: []
+
+  - id: weekly-digest-2026-08-20
+    path: weekly-digests/2026/2026-08-20.md
+    title: AI Engineering Practice Radar — 2026-08-20
+    content_type: digest
+    document_status: current
+    evidence_status: mixed
+    product_lifecycle: mixed
+    last_verified: 2026-08-20
+    next_review_due: 2026-09-20
+    review_frequency: monthly
+    metadata_source: front-matter
+    canonical_for: []
+    retrieval:
+      default_grounding: false
+      priority: 20
+      role: recent-change-record
+    topics:
+      - weekly-research
+      - agent-evaluation
+      - deployment
+      - coding-agents
+      - security-regression
+      - durable-execution
+    vendors:
+      - anthropic
+      - openai
+      - langchain
+    related:
+      - agent-capability-containment
+      - specification-driven-ai-coding
     supersedes: []
     superseded_by: []
