@@ -1,6 +1,6 @@
 ---
 status: current
-last_verified: 2026-08-16
+last_verified: 2026-08-24
 source_priority: official
 vendors:
   - microsoft
@@ -53,7 +53,7 @@ This page is a certification index, not a substitute for current product documen
 
 - https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103
 
-## Verification result — 2026-08-16
+## Verification result — 2026-08-24
 
 - No change found to the published April 16, 2026 skills baseline.
 - Domain names and weights still match the official study guide.
