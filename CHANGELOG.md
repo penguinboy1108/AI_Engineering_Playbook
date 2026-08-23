@@ -7,7 +7,7 @@ All meaningful playbook changes are recorded here.
 ### Added
 
 - Verified AI-103 objective map using the April 16, 2026 official exam blueprint.
-- Monthly verification reports for 2026-08-09 and 2026-08-16.
+- Monthly verification reports for 2026-08-09, 2026-08-16, and 2026-08-24.
 - Lifecycle registry entries for Azure OpenAI Assistants API (classic), the current Foundry Models Azure AI Inference beta SDK surface, Foundry Workflows, Foundry Agents (classic), and Prompt Flow.
 - Root `AGENTS.md` contract for retrieval order, Chinese answer behaviour, evidence handling, current-source verification, confidentiality, and repository modification.
 - `GPT_USAGE.md` for using the repository as grounded context during real engineering problem solving.
@@ -22,9 +22,10 @@ All meaningful playbook changes are recorded here.
 
 ### Changed
 
-- Reverified AI-103 objectives and Anthropic agent-containment guidance on 2026-08-16.
-- Refreshed the OpenAI Agents SDK production-control page against official release `v0.21.0`, including deterministic testing utilities, interruption/approval state isolation, MCP lifecycle isolation, retry backoff, sandbox grants and sensitive-error redaction.
-- Clarified the Azure AI Inference lifecycle discrepancy between the current Foundry Models endpoint page and a classic migration page; project migration planning must verify the exact package and endpoint surface.
+- Reverified AI-103 objectives and Anthropic agent-containment guidance on 2026-08-24.
+- Refreshed the OpenAI Agents SDK production-control page through official release `v0.22.0` (2026-08-19), including explicit-client provider configuration, persisted-state redaction, terminal Response failure handling, and checkpoint usage isolation.
+- Retained and reverified the Azure AI Inference lifecycle scope discrepancy: current Foundry Models documentation still states 2026-08-26 for the named beta-SDK surface, while the refreshed classic migration page states 2026-05-30 for the `azure-ai-inference` package.
+- Reverified Microsoft lifecycle dates for Assistants API (classic), Foundry Workflows, Foundry Agents (classic), and Prompt Flow on 2026-08-24.
 - Corrected AI-103 domain weights to the current official 25–30%, 30–35%, and three 10–15% domains.
 - Standardised source policy around separate document, evidence, and product-lifecycle dimensions.
 - Defined `catalog.yaml` as the retrieval source of truth during front-matter migration.
