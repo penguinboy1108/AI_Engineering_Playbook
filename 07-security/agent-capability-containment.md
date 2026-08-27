@@ -1,6 +1,6 @@
 ---
 status: current
-last_verified: 2026-07-30
+last_verified: 2026-08-24
 source_priority: official
 vendors:
   - anthropic
@@ -168,6 +168,10 @@ A single credential that can read and write across development, test, and produc
 - https://www.anthropic.com/engineering/how-we-contain-claude
 - https://www.anthropic.com/engineering/claude-code-sandboxing
 - https://www.anthropic.com/engineering/claude-code-auto-mode
+
+## Verification result — 2026-08-24
+
+Anthropic's current containment guidance still supports the core recommendation: enforce hard capability boundaries across the agent environment, model layer, and external content/tool inputs, and do not rely on repeated human approval as the sole defence. The current engineering report continues to cite approximately 93% approval rates and materially reduced permission prompts under sandboxing, reinforcing approval fatigue as a weak primary control.
 
 ## Project evidence
 
