@@ -6,6 +6,8 @@ All meaningful playbook changes are recorded here.
 
 ### Added
 
+- Canonical **Bounded-Failure Evaluation for Agents** pattern: evaluate bounded retry, clarification, refusal, escalation and safe stopping; separate agent failure from environment/verifier/infrastructure failure; prefer independent final-state verification.
+- Catalog entry for the merged 2026-08-28 Practice Radar so the observation that produced the bounded-failure pattern remains traceable while staying excluded from default grounding.
 - Verified AI-103 objective map using the April 16, 2026 official exam blueprint.
 - Monthly verification reports for 2026-08-09, 2026-08-16, and 2026-08-24.
 - Lifecycle registry entries for Azure OpenAI Assistants API (classic), the current Foundry Models Azure AI Inference beta SDK surface, Foundry Workflows, Foundry Agents (classic), and Prompt Flow.
@@ -22,6 +24,9 @@ All meaningful playbook changes are recorded here.
 
 ### Changed
 
+- Reworked **SDK Version and Default Control** to remove fast-decaying point-release snapshots from canonical guidance. The page now focuses on durable controls: locking dependencies, explicit model/runtime configuration, behavioural and state regression, provenance, staged rollout and rollback.
+- Changed the SDK-control page from monthly to quarterly review; individual version facts belong in upgrade PRs/vendor changelogs unless a release changes the durable engineering recommendation.
+- Linked the new bounded-failure pattern to containment, bounded workflow, specification-driven coding and SDK/runtime reliability guidance in `catalog.yaml`.
 - Reverified AI-103 objectives and Anthropic agent-containment guidance on 2026-08-24.
 - Refreshed the OpenAI Agents SDK production-control page through official release `v0.22.0` (2026-08-19), including explicit-client provider configuration, persisted-state redaction, terminal Response failure handling, and checkpoint usage isolation.
 - Retained and reverified the Azure AI Inference lifecycle scope discrepancy: current Foundry Models documentation still states 2026-08-26 for the named beta-SDK surface, while the refreshed classic migration page states 2026-05-30 for the `azure-ai-inference` package.
@@ -45,13 +50,13 @@ All meaningful playbook changes are recorded here.
 
 ### Needs validation
 
-- Synchronise new certification and monthly-verification entries into `catalog.yaml` during metadata migration.
 - Migrate remaining legacy page front matter to the standard metadata model.
 - Add an executable retrieval/evaluation runner for `evals/retrieval-cases.yaml` after selecting the indexing stack.
 - Confirm branch-protection settings require the content-quality workflow before merge.
 - Review remaining existing pages for unsupported or ambiguous lifecycle claims during the next source audit.
 - Package-level migration review before adopting Microsoft Agent Framework releases.
 - Verify exact Azure AI Inference retirement dates against the precise package and endpoint surface used by each existing project because current and classic Microsoft pages expose different dates.
+- Evidence-driven skill authoring from the 2026-09-04 Practice Radar has strong Microsoft implementation evidence and supporting OpenAI harness principles, but remains an observation until broader/project validation justifies canonical promotion.
 
 ## 2026-08-02
 

@@ -1,5 +1,5 @@
 schema_version: "1.0"
-catalog_updated: 2026-08-20
+catalog_updated: 2026-09-07
 
 entries:
   - id: bounded-document-automation-case-study
@@ -33,6 +33,7 @@ entries:
     related:
       - bounded-document-automation-pattern
       - adr-001-bounded-workflow
+      - bounded-failure-evaluation
     supersedes: []
     superseded_by: []
 
@@ -68,6 +69,43 @@ entries:
     related:
       - bounded-document-automation-case-study
       - adr-001-bounded-workflow
+      - bounded-failure-evaluation
+    supersedes: []
+    superseded_by: []
+
+  - id: bounded-failure-evaluation
+    path: 10-patterns/bounded-failure-evaluation.md
+    title: Bounded-Failure Evaluation for Agents
+    content_type: pattern
+    document_status: current
+    evidence_status: engineering-inference
+    product_lifecycle: not-applicable
+    last_verified: 2026-09-07
+    next_review_due: 2026-12-07
+    review_frequency: quarterly
+    metadata_source: front-matter
+    canonical_for:
+      - agent-failure-evaluation
+    retrieval:
+      default_grounding: true
+      priority: 95
+      role: primary
+    topics:
+      - agent-evaluation
+      - failure-handling
+      - safe-stop
+      - retries
+      - human-in-the-loop
+      - reliability
+      - security
+    vendors:
+      - anthropic
+      - openai
+      - langchain
+    related:
+      - bounded-document-automation-pattern
+      - specification-driven-ai-coding
+      - agent-capability-containment
     supersedes: []
     superseded_by: []
 
@@ -99,6 +137,7 @@ entries:
     related:
       - bounded-document-automation-pattern
       - bounded-document-automation-case-study
+      - bounded-failure-evaluation
     supersedes: []
     superseded_by: []
 
@@ -127,7 +166,8 @@ entries:
       - trust-boundary
     vendors:
       - anthropic
-    related: []
+    related:
+      - bounded-failure-evaluation
     supersedes: []
     superseded_by: []
 
@@ -138,9 +178,9 @@ entries:
     document_status: current
     evidence_status: official
     product_lifecycle: mixed
-    last_verified: 2026-08-24
-    next_review_due: 2026-08-30
-    review_frequency: monthly
+    last_verified: 2026-09-07
+    next_review_due: 2026-12-07
+    review_frequency: quarterly
     metadata_source: front-matter
     canonical_for:
       - agent-sdk-version-control
@@ -154,9 +194,11 @@ entries:
       - regression-testing
       - runtime-provenance
       - production-reliability
+      - state-recovery
     vendors:
       - openai
-    related: []
+    related:
+      - bounded-failure-evaluation
     supersedes: []
     superseded_by: []
 
@@ -189,7 +231,8 @@ entries:
       - microsoft
       - anthropic
       - openai
-    related: []
+    related:
+      - bounded-failure-evaluation
     supersedes: []
     superseded_by: []
 
@@ -286,5 +329,35 @@ entries:
     related:
       - agent-capability-containment
       - specification-driven-ai-coding
+    supersedes: []
+    superseded_by: []
+
+  - id: weekly-digest-2026-08-28
+    path: weekly-digests/2026/2026-08-28.md
+    title: AI Engineering Practice Radar — 2026-08-28
+    content_type: digest
+    document_status: current
+    evidence_status: engineering-inference
+    product_lifecycle: not-applicable
+    last_verified: 2026-08-28
+    next_review_due: 2026-09-28
+    review_frequency: monthly
+    metadata_source: front-matter
+    canonical_for: []
+    retrieval:
+      default_grounding: false
+      priority: 20
+      role: recent-change-record
+    topics:
+      - weekly-research
+      - agent-evaluation
+      - safe-stop
+      - evaluation-harness
+      - failure-handling
+    vendors:
+      - openai
+      - langchain
+    related:
+      - bounded-failure-evaluation
     supersedes: []
     superseded_by: []

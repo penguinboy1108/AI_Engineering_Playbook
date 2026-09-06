@@ -5,7 +5,7 @@ The repository is organised primarily by engineering lifecycle rather than by ve
 Existing directory numbers are kept stable. New planned areas use unique numbers to avoid path churn and duplicate prefixes.
 
 ```text
-00-certification/           Certification objectives and evidence mapping
+00-certification/           Secondary certification objectives and evidence mapping
 01-problem-framing/         When to use rules, workflows, retrieval, or agents
 02-architecture/            Single-agent, workflow, orchestration, and multi-agent patterns
 03-context-and-rag/         Ingestion, chunking, retrieval, grounding, memory, and evaluation
@@ -74,6 +74,8 @@ Recent-change records only when requested
 
 `catalog.yaml` defines the retrieval role and priority for each indexed page. Weekly digests are not default grounding. Deprecated, superseded, archived, experimental, and unverified pages are excluded by default.
 
+Certification pages are secondary reference material and should not drive default engineering retrieval unless the question is explicitly about certification or an exam objective exposes a real engineering gap.
+
 ## Current validated content
 
 ### Practice guides
@@ -90,6 +92,7 @@ Recent-change records only when requested
 ### Patterns
 
 - [Bounded Document Automation Workflow](10-patterns/bounded-document-automation-workflow.md)
+- [Bounded-Failure Evaluation for Agents](10-patterns/bounded-failure-evaluation.md)
 
 ### Decisions
 
@@ -97,7 +100,7 @@ Recent-change records only when requested
 
 ### Research records
 
-- [AI Engineering Weekly Digest — 2026-07-30](weekly-digests/2026/2026-07-30.md)
+Weekly Practice Radar files are observation records and are intentionally excluded from default grounding. Use them to discover candidates for later promotion, not as canonical truth.
 
 ## Machine and quality assets
 
@@ -108,16 +111,17 @@ Recent-change records only when requested
 - [Content-quality workflow](.github/workflows/content-quality.yml)
 - [Pull-request review template](.github/pull_request_template.md)
 
-## Initial content priorities
+## Current engineering content priorities
 
 1. Rules vs deterministic workflow vs RAG vs agent decision framework.
-2. Structured outputs, validation, retry, and abstention.
+2. Structured outputs, validation, retry, abstention, clarification, escalation, and safe stopping.
 3. RAG ingestion, rapid update, retrieval, reranking, and separate retrieval/generation evaluation.
 4. Tool contracts, permissions, idempotency, human approval, and MCP.
-5. Production observability, reliability, recovery, and cost controls.
-6. Prompt-injection, data-poisoning, identity, and agent capability containment.
-7. Project-to-playbook publication workflow and additional sanitised case studies.
-8. Microsoft AI-103 objective mapping.
-9. Anthropic architecture and developer-certification mapping.
-10. OpenAI current API, Agents SDK, evaluation, and production implementation patterns.
-11. Executable retrieval and answer evaluations against representative work questions.
+5. Production observability, reliability, recovery, checkpointing, and cost controls.
+6. Prompt injection, data poisoning, identity, scoped credentials, and agent capability containment.
+7. Offline/online agent evaluation architecture, evaluator calibration, final-state verification, and production-trace regression loops.
+8. Evidence-driven coding-agent harness/skill design and repository legibility.
+9. Project-to-playbook publication workflow and additional sanitised case studies.
+10. Executable retrieval and answer evaluations against representative work questions.
+
+Certification mapping is maintained only as secondary reference material; it is not a primary content-growth target for the playbook.
