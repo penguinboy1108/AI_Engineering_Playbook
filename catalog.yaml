@@ -78,7 +78,7 @@ entries:
     title: Bounded-Failure Evaluation for Agents
     content_type: pattern
     document_status: current
-    evidence_status: multi-source-primary
+    evidence_status: engineering-inference
     product_lifecycle: not-applicable
     last_verified: 2026-09-07
     next_review_due: 2026-12-07
