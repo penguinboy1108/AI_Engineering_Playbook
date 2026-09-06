@@ -1,10 +1,10 @@
 ---
 status: current
-last_verified: 2026-08-24
+last_verified: 2026-09-07
 source_priority: official
 vendors:
   - openai
-review_frequency: monthly
+review_frequency: quarterly
 applies_to:
   - production
   - agents
@@ -17,141 +17,174 @@ applies_to:
 
 **[Official release policy + engineering inference]**
 
-Treat rapidly evolving pre-1.0 agent SDKs as behaviour-bearing dependencies, not passive libraries. Pin versions, configure models and reasoning behaviour explicitly, and require regression evidence before upgrades.
+Treat rapidly evolving agent SDKs and orchestration frameworks as behaviour-bearing runtime dependencies, not passive libraries. Pin deployed versions, configure important behaviour explicitly, and require regression evidence before upgrades.
 
-A production deployment should not silently change because an SDK release changes:
+The durable risk is not the version number itself. A dependency upgrade can silently change:
 
-- the default model;
-- reasoning effort or verbosity;
-- refusal handling;
-- tool error propagation;
-- handoff history;
-- supported runtime versions;
-- MCP session behaviour;
-- sandbox path or materialisation rules;
-- retry, session or provider behaviour;
-- provider configuration validation;
-- persisted or replayable error state.
+- default model or model settings;
+- tool-call and error semantics;
+- refusal and guardrail behaviour;
+- retries, timeouts and cancellation;
+- handoff and session history;
+- checkpoint, resume and persistence behaviour;
+- MCP transport or lifecycle;
+- sandbox, path, mount or workspace rules;
+- provider/client construction;
+- tracing, redaction or replayable state;
+- supported runtime or HTTP transport.
 
-## Current verification snapshot
+## Why this matters
 
-As verified on **2026-08-24**, the OpenAI Agents SDK release policy still uses modified semantic versioning in the form `0.Y.Z`:
+The OpenAI Agents SDK currently documents `0.Y.Z` versioning in which minor versions may contain breaking changes to public non-beta interfaces. Its changelog has also repeatedly included changes to defaults, state handling, provider construction, sandboxing, MCP and error semantics.
 
-- minor `Y` releases can include breaking changes to public non-beta interfaces;
-- patch `Z` releases are intended for non-breaking changes, new features, private-interface changes and beta updates;
-- the latest official release is **`v0.22.0`**, published **2026-08-19**;
-- `v0.22.0` tightens failure handling and data isolation: terminal function-tool output rejected by output guardrails is redacted from replayable and persisted SDK state; failed or incomplete non-streaming Responses now raise `ModelBehaviorError`; usage accounting is isolated between independent `RunState` checkpoints; and conflicting provider configuration is rejected when `OpenAIProvider` is constructed with an explicit `openai_client`;
-- applications that pass an explicit `openai_client` together with `organization` or `project` must move those values into the `AsyncOpenAI` client instead of supplying duplicate provider arguments;
-- `v0.21.0` introduced the OpenAI Python v3 / HTTPX2 migration and provider-neutral deterministic testing utilities, so custom HTTP transports still require explicit migration review;
-- earlier recent releases changed default models, refusal handling, sandbox boundaries, runtime support, MCP behaviour and handoff behaviour.
+This page intentionally does **not** track the latest point release. Point-in-time release facts belong in upgrade PRs, maintenance records and vendor changelogs. Canonical playbook guidance should remain useful after the next release ships.
 
-The exact latest version is a point-in-time observation, not a durable recommendation. Re-check the official release page before every upgrade.
+Current OpenAI documentation also demonstrates why model defaults must be treated as configuration rather than architecture: an agent that does not specify a model inherits the SDK's current default, and that default can change independently of application source code.
 
 ## Required controls
 
-### Pin dependencies
+### 1. Lock the deployed dependency graph
 
-Use an exact version or a controlled lockfile in deployed applications.
+Use an exact version or a reviewed lockfile for production deployments.
 
 ```text
 openai-agents==0.Y.Z
 ```
 
-Do not use an unconstrained dependency such as `>=0.Y` in a production service.
+Avoid unconstrained ranges such as `>=0.Y` for deployed services when a minor update may alter public interfaces or behaviour.
 
-### Configure behaviour explicitly
+Store the lockfile with the application and make dependency changes visible in code review.
 
-Set the production model and behaviour-bearing options in configuration rather than relying on SDK defaults, including:
+### 2. Configure behaviour explicitly
 
-- reasoning effort and verbosity;
-- turn limits, timeout and retry policy;
-- tool failure and refusal handling;
-- handoff-history behaviour;
-- Realtime transport and model;
-- sandbox grants, mounts and materialisation roots;
-- session persistence and provider-specific retry behaviour;
-- provider client, organization/project scope and custom HTTP transport.
+Do not inherit behaviour that materially affects quality, cost, safety or state correctness when it can be configured explicitly.
 
-When supplying an explicit OpenAI client, keep organization/project configuration on that client rather than duplicating it at the provider layer.
+Depending on the framework, make these explicit:
 
-### Separate upgrade from deployment
+- model identifier;
+- reasoning effort / verbosity and other material model settings;
+- maximum turns;
+- timeout and retry policy;
+- tool failure handling;
+- refusal and guardrail behaviour;
+- handoff-history policy;
+- session/checkpoint persistence;
+- sandbox grants, mounts and workspace roots;
+- provider/client and organization/project scope;
+- transport or endpoint configuration.
 
-An SDK upgrade should be a reviewed change with:
+### 3. Separate dependency upgrade from feature rollout
 
-1. changelog and migration-note review;
+An SDK/framework upgrade should be a reviewable engineering change with:
+
+1. official changelog and migration-note review;
 2. lockfile diff;
 3. unit and contract tests;
-4. deterministic runtime tests where the SDK supports them;
-5. recorded-agent regression evaluation;
-6. provider/client configuration tests;
-7. cost and latency comparison;
-8. security-boundary review where sandbox, tools, MCP or persisted state changed;
-9. canary or staged deployment;
-10. rollback plan.
+4. deterministic runtime tests where available;
+5. behavioural regression evals;
+6. provider/integration tests;
+7. state and recovery tests;
+8. security-boundary review when tools, sandboxes, MCP or persistence changed;
+9. cost and latency comparison where relevant;
+10. staged rollout and tested rollback.
 
-### Test failure and state semantics
+Do not combine a framework upgrade, model migration, prompt rewrite and major feature change into one rollout unless the risk is intentionally accepted; doing so makes regressions difficult to attribute and rollback difficult to isolate.
 
-Regression suites should cover:
+### 4. Test failure and state semantics
 
-- model refusal and malformed structured output;
-- terminal Responses with `failed` or `incomplete` status;
+Happy-path text output is insufficient for an agent runtime upgrade. Cover the boundaries the runtime owns.
+
+Recommended regression groups:
+
+- refusal and malformed structured output;
+- terminal provider failures and incomplete responses;
 - tool timeout, tool error and duplicate calls;
-- output-guardrail rejection and whether sensitive terminal tool output persists or replays;
-- MCP disconnect, reconnect and resource enumeration;
-- cancellation, maximum turns and provider retries;
+- MCP disconnect/reconnect and capability enumeration;
+- cancellation and maximum-turn handling;
+- retry and backoff behaviour;
 - handoff context and session-history preservation;
-- duplicate or concurrent writes;
 - interruption, approval and resume state;
-- independent checkpoint usage/accounting isolation;
-- sandbox path, symlink, archive, mount and resume safety;
-- Realtime session and default-model behaviour;
-- explicit-client provider configuration and custom HTTP transport compatibility.
+- independent checkpoint isolation;
+- duplicate/concurrent writes and idempotency;
+- persisted-state redaction and replay behaviour;
+- sandbox path traversal, symlinks, archives, mounts and grants;
+- provider/client construction and custom transport compatibility.
 
-### Capture runtime provenance
+If the SDK exposes deterministic testing utilities, use them to improve repeatability, but do not let them replace integration tests across the real provider, authentication, transport and tool boundaries you depend on.
 
-Each trace or execution record should include:
+### 5. Capture runtime provenance
 
-- application and SDK version;
+A trace or execution record should make a behaviour regression attributable.
+
+Capture where appropriate:
+
+- application build/version;
+- SDK/framework and provider-client versions;
 - model identifier and effective settings;
-- prompt and tool-schema version;
-- evaluation or release identifier;
-- provider/client configuration version where behaviour depends on custom transport or scope;
-- sandbox, mount and policy configuration version where tools can modify state.
+- prompt/instruction version;
+- tool-schema and MCP-server version;
+- policy/guardrail version;
+- evaluation/release identifier;
+- sandbox/workspace policy version.
+
+Without provenance, a production regression may be impossible to separate among application code, prompt, model, SDK, provider or infrastructure changes.
 
 ## Upgrade decision table
 
 | Change type | Minimum response |
 |---|---|
 | Patch release | Review notes and run focused regression tests |
-| Minor pre-1.0 release | Treat as potentially interface- or behaviour-breaking; run full regression and staged rollout |
-| Default model change | Set model explicitly; compare quality, latency and cost |
-| Tool, MCP or retry change | Re-run failure-path, reconnect, replay and idempotency tests |
-| Runtime or HTTP transport change | Update CI/deployment image and custom-client integration tests |
-| Refusal or structured-output change | Re-run safety, abstention and schema-recovery tests |
-| Sandbox, mount or path change | Re-run traversal, symlink, credential, mount and grant-boundary tests |
-| State, approval or persistence change | Re-run interruption, resume, replay, redaction and checkpoint-isolation tests |
-| Provider configuration contract change | Validate explicit-client construction and reject ambiguous duplicate configuration |
+| Pre-1.0 minor release | Treat as potentially breaking; run broad behavioural regression and staged rollout |
+| Default model/settings change | Configure explicitly and compare quality, latency and cost |
+| Tool/MCP/retry change | Re-run failure, reconnect, replay and idempotency tests |
+| Runtime/transport change | Update CI/runtime image and integration tests |
+| Refusal/structured-output change | Re-run safety, abstention and schema-recovery tests |
+| Sandbox/path/mount change | Re-run traversal, credential and grant-boundary tests |
+| State/approval/persistence change | Re-run interruption, resume, replay, redaction and checkpoint tests |
+| Provider configuration change | Validate explicit-client construction and reject ambiguous configuration |
+
+## Anti-patterns
+
+### Tracking the latest SDK version as canonical knowledge
+
+A version snapshot ages quickly and encourages monthly documentation churn without improving engineering decisions. Link to the vendor changelog at upgrade time instead.
+
+### Floating runtime dependencies
+
+A rebuild can change production behaviour without an application-code change.
+
+### Implicit model defaults
+
+A dependency release can alter quality, latency or cost even when the application did not intentionally migrate models.
+
+### Happy-path-only upgrade tests
+
+Agent-runtime regressions commonly appear in retries, interruption/resume, tool boundaries, persistence and error handling rather than in a one-turn success case.
+
+### No provenance in traces
+
+A regression cannot be reproduced or attributed reliably.
 
 ## Validation checklist
 
-- [ ] Production SDK and transitive dependencies are locked.
-- [ ] Model and important model settings are explicit.
-- [ ] Upgrade PRs link to official release notes.
-- [ ] Behavioural evals cover success, failure and state-restoration paths.
-- [ ] Deterministic SDK test utilities are used where they improve repeatability without replacing end-to-end provider tests.
-- [ ] Provider/client configuration is explicit and covered by integration tests.
-- [ ] Sandbox, mount, tool-boundary and persisted-state changes receive security regression tests.
-- [ ] Cost and latency are compared before rollout.
-- [ ] Traces include SDK, model, prompt, tool-schema and policy versions.
-- [ ] A rollback path is tested.
+- [ ] Production dependencies are locked.
+- [ ] Model and important behaviour-bearing settings are explicit.
+- [ ] Upgrade PRs link to official release/migration notes.
+- [ ] Behavioural evals cover success, failure and recovery paths.
+- [ ] State/checkpoint semantics are tested when the runtime owns persistence.
+- [ ] Provider/client and real integration boundaries are covered.
+- [ ] Tool, sandbox and MCP changes receive security regression tests.
+- [ ] Cost and latency are compared when they can materially change.
+- [ ] Traces include enough provenance to attribute a regression.
+- [ ] Rollback is possible and tested for consequential deployments.
 
 ## Sources
 
-**[Official OpenAI SDK release policy and releases]**
+**[Official OpenAI SDK documentation]**
 
 - https://openai.github.io/openai-agents-python/release/
-- https://github.com/openai/openai-agents-python/releases/tag/v0.22.0
+- https://openai.github.io/openai-agents-python/models/
 
 ## Scope note
 
-The examples are based on the OpenAI Agents SDK, but the control pattern applies to any rapidly evolving agent framework or model abstraction layer.
+The examples are grounded in the OpenAI Agents SDK, but the control pattern applies to rapidly evolving agent frameworks, model abstraction layers and orchestration runtimes generally.
