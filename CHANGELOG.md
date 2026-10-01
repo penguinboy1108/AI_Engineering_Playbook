@@ -7,7 +7,7 @@ All meaningful playbook changes are recorded here.
 ### Added
 
 - Verified AI-103 objective map using the April 16, 2026 official exam blueprint.
-- Monthly verification reports for 2026-08-09, 2026-08-16, and 2026-08-24.
+- Monthly verification reports for 2026-08-09, 2026-08-16, 2026-08-24, and 2026-08-31.
 - Lifecycle registry entries for Azure OpenAI Assistants API (classic), the current Foundry Models Azure AI Inference beta SDK surface, Foundry Workflows, Foundry Agents (classic), and Prompt Flow.
 - Root `AGENTS.md` contract for retrieval order, Chinese answer behaviour, evidence handling, current-source verification, confidentiality, and repository modification.
 - `GPT_USAGE.md` for using the repository as grounded context during real engineering problem solving.
@@ -22,10 +22,12 @@ All meaningful playbook changes are recorded here.
 
 ### Changed
 
-- Reverified AI-103 objectives and Anthropic agent-containment guidance on 2026-08-24.
+- Reverified AI-103 objectives, Anthropic agent-containment guidance, and OpenAI Agents SDK release status on 2026-08-31.
+- Confirmed the latest official OpenAI Agents SDK release remains `v0.22.0` (2026-08-19); no new SDK migration claim was added.
+- Updated Microsoft lifecycle wording after the documented 2026-08-26 retirement dates for Azure OpenAI Assistants API (classic) and the current Foundry Models Azure AI Inference beta-SDK surface passed. Because official pages still use future-tense retirement wording, the registry now marks current operational status as requiring validation instead of guessing availability.
+- Reverified Foundry Workflows (2026-12-01), Foundry Agents classic (2027-03-31), and Prompt Flow (2027-04-20) lifecycle dates on 2026-08-31.
+- Retained the Azure AI Inference lifecycle scope discrepancy between current Foundry Models documentation and classic migration guidance.
 - Refreshed the OpenAI Agents SDK production-control page through official release `v0.22.0` (2026-08-19), including explicit-client provider configuration, persisted-state redaction, terminal Response failure handling, and checkpoint usage isolation.
-- Retained and reverified the Azure AI Inference lifecycle scope discrepancy: current Foundry Models documentation still states 2026-08-26 for the named beta-SDK surface, while the refreshed classic migration page states 2026-05-30 for the `azure-ai-inference` package.
-- Reverified Microsoft lifecycle dates for Assistants API (classic), Foundry Workflows, Foundry Agents (classic), and Prompt Flow on 2026-08-24.
 - Corrected AI-103 domain weights to the current official 25–30%, 30–35%, and three 10–15% domains.
 - Standardised source policy around separate document, evidence, and product-lifecycle dimensions.
 - Defined `catalog.yaml` as the retrieval source of truth during front-matter migration.
@@ -37,8 +39,8 @@ All meaningful playbook changes are recorded here.
 
 ### Deprecated
 
-- Azure OpenAI Assistants API (classic), retiring 2026-08-26.
-- Azure AI Inference beta SDK for the current Foundry Models endpoint surface, retiring 2026-08-26.
+- Azure OpenAI Assistants API (classic): documented retirement date 2026-08-26 has passed; official page has not yet been refreshed to an explicit post-retirement status.
+- Azure AI Inference beta SDK for the current Foundry Models endpoint surface: documented retirement date 2026-08-26 has passed; exact package/endpoint support state requires validation because Microsoft documentation exposes differing lifecycle dates across surfaces.
 - Microsoft Foundry Workflows visual experience, retiring 2026-12-01.
 - Microsoft Foundry Agents (classic), retiring 2027-03-31.
 - Prompt Flow in Microsoft Foundry and Azure Machine Learning, retiring 2027-04-20.
@@ -46,6 +48,8 @@ All meaningful playbook changes are recorded here.
 ### Needs validation
 
 - Synchronise new certification and monthly-verification entries into `catalog.yaml` during metadata migration.
+- Reconcile `catalog.yaml` review metadata with refreshed front-matter verification dates; the catalog is not updated in the 2026-08-31 pass because its existing metadata migration is incomplete.
+- Confirm post-retirement operational behaviour for Azure OpenAI Assistants API (classic) and the named Azure AI Inference beta-SDK surface; do not infer continued support from endpoints or packages that may still respond/install.
 - Migrate remaining legacy page front matter to the standard metadata model.
 - Add an executable retrieval/evaluation runner for `evals/retrieval-cases.yaml` after selecting the indexing stack.
 - Confirm branch-protection settings require the content-quality workflow before merge.

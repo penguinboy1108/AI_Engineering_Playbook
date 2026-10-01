@@ -1,6 +1,6 @@
 ---
 status: current
-last_verified: 2026-08-24
+last_verified: 2026-08-31
 source_priority: official
 vendors:
   - openai
@@ -35,12 +35,12 @@ A production deployment should not silently change because an SDK release change
 
 ## Current verification snapshot
 
-As verified on **2026-08-24**, the OpenAI Agents SDK release policy still uses modified semantic versioning in the form `0.Y.Z`:
+As verified on **2026-08-31**, the OpenAI Agents SDK release policy still uses modified semantic versioning in the form `0.Y.Z`:
 
 - minor `Y` releases can include breaking changes to public non-beta interfaces;
 - patch `Z` releases are intended for non-breaking changes, new features, private-interface changes and beta updates;
-- the latest official release is **`v0.22.0`**, published **2026-08-19**;
-- `v0.22.0` tightens failure handling and data isolation: terminal function-tool output rejected by output guardrails is redacted from replayable and persisted SDK state; failed or incomplete non-streaming Responses now raise `ModelBehaviorError`; usage accounting is isolated between independent `RunState` checkpoints; and conflicting provider configuration is rejected when `OpenAIProvider` is constructed with an explicit `openai_client`;
+- the latest official release remains **`v0.22.0`**, published **2026-08-19**;
+- `v0.22.0` tightens failure handling and data isolation: terminal function-tool output rejected by output guardrails is redacted from replayable and persisted SDK state; failed or incomplete non-streaming Responses raise `ModelBehaviorError`; usage accounting is isolated between independent `RunState` checkpoints; and conflicting provider configuration is rejected when `OpenAIProvider` is constructed with an explicit `openai_client`;
 - applications that pass an explicit `openai_client` together with `organization` or `project` must move those values into the `AsyncOpenAI` client instead of supplying duplicate provider arguments;
 - `v0.21.0` introduced the OpenAI Python v3 / HTTPX2 migration and provider-neutral deterministic testing utilities, so custom HTTP transports still require explicit migration review;
 - earlier recent releases changed default models, refusal handling, sandbox boundaries, runtime support, MCP behaviour and handoff behaviour.
