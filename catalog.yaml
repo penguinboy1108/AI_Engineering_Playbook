@@ -148,7 +148,7 @@ entries:
     document_status: current
     evidence_status: official
     product_lifecycle: not-applicable
-    last_verified: 2026-08-24
+    last_verified: 2026-08-31
     next_review_due: 2026-10-30
     review_frequency: quarterly
     metadata_source: front-matter
