@@ -96,6 +96,27 @@ A useful contract records:
 - what new evidence justifies continuing;
 - the terminal action after the retry budget is exhausted.
 
+### 3a. Reconcile external side effects before retry
+
+**[Official Microsoft runtime guarantee + engineering synthesis]** Durable execution and checkpoint replay do **not** imply exactly-once external side effects. Microsoft's Durable Task documentation states that an activity can be executed more than once if it completes but its result has not yet been recorded. External events can also be delivered more than once.
+
+For any consequential write, test the crash window **after the remote system commits but before local success is persisted**. Prefer a stable business-operation ID and receiver-supported idempotency key. Persist intent before dispatch where feasible, and reconcile against an authoritative external receipt before retrying an uncertain operation.
+
+```text
+stable operation ID -> persist intent -> inspect external receipt
+  -> completed: record verified outcome; do not resubmit
+  -> absent: submit idempotently, then verify
+  -> ambiguous: reconcile / human review; never blindly duplicate
+```
+
+A local "sent" flag is insufficient if the remote operation committed but acknowledgement was lost. An idempotency key alone is insufficient if the receiver does not enforce it, its retention window expired, or the request parameters changed. When the remote system offers neither idempotency nor reliable lookup, prefer a compensating transaction or manual reconciliation rather than claiming exactly-once delivery.
+
+**Regression fixture:** execute a remote write successfully, drop its acknowledgement, crash/restart the worker, then assert exactly one *business effect* using independent destination state. Also test concurrent duplicate triggers, expired idempotency records, and divergent payloads sharing the same operation ID.
+
+Sources:
+- https://learn.microsoft.com/en-us/azure/durable-task/common/programming-model-overview
+- https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-external-events
+
 ### 4. Separate Harness, Environment, and Verifier
 
 - **Harness:** model, prompts, loop, tools, middleware, memory/session behaviour and agent-side retry logic.

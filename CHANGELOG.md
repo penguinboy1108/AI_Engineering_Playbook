@@ -24,6 +24,10 @@ All meaningful playbook changes are recorded here.
 
 ### Changed
 
+- November 2026 engineering audit: strengthened agent capability containment with action-level authorization and independently verified positive/negative boundary probes; documented that Microsoft Foundry hosted-agent egress controls remain Preview and not intended for production.
+- Extended bounded-failure evaluation with at-least-once activity replay, stable operation IDs, external receipt reconciliation, and crash-after-commit regression tests.
+- Added `monthly-verifications/2026/2026-11-02.md` with source-backed promotion decisions and the product-specific OpenAI Agent Builder / Evals November 30 retirement watch; no certification or version-snapshot churn.
+
 - Reworked **SDK Version and Default Control** to remove fast-decaying point-release snapshots from canonical guidance. The page now focuses on durable controls: locking dependencies, explicit model/runtime configuration, behavioural and state regression, provenance, staged rollout and rollback.
 - Changed the SDK-control page from monthly to quarterly review; individual version facts belong in upgrade PRs/vendor changelogs unless a release changes the durable engineering recommendation.
 - Linked the new bounded-failure pattern to containment, bounded workflow, specification-driven coding and SDK/runtime reliability guidance in `catalog.yaml`.
