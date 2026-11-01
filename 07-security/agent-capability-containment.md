@@ -116,6 +116,40 @@ flowchart LR
     X --> O[Trace and audit store]
 ```
 
+## Action-level authorization and boundary verification
+
+**[Engineering synthesis supported by official containment guidance and incident evidence]** Capability containment limits the maximum reachable blast radius; it does **not** prove that a specific reachable action is authorized. Before an external side effect, normalize the proposed action and check its **resource/destination, authenticated acting identity, operation, data scope, and applicable constraints** against policy facts independent of the actor's narrative. An accessible URL, inherited credential, listed tool, or successful connection is not authorization evidence.
+
+A practical enforcement flow is:
+
+```text
+agent proposes action
+  -> canonical action record (principal, resource, verb, payload class, run ID)
+  -> independent policy decision: allow / deny / escalate
+  -> constrained executor (no broader credentials than needed)
+  -> receipt + policy decision + correlation ID in audit trail
+```
+
+The policy decision should be made at the actual execution boundary, not solely in a prompt or a self-review by the same agent. A separate reviewer can help with ambiguous cases, but deterministic authorization rules should not be delegated to a probabilistic reviewer.
+
+**Test the deployed boundary, not merely its configuration:** run an allowed probe that must reach its intended endpoint and a denied probe that must not reach it. Correlate policy-decision telemetry with independently observed destination effects. A generic HTTP 403, DNS failure, or TLS error does not alone demonstrate that the intended policy enforced the denial. Repeat tests across alternate tools, redirects, and indirect paths that could reach the same side effect.
+
+These are **engineering test recommendations**, not claims that any particular hosted egress preview is production-ready. Preview implementations must be separately assessed for production suitability.
+
+### Additional validation cases
+
+- [ ] A reachable but out-of-scope resource is denied even when the actor asserts it is authorized.
+- [ ] An allowed destination with the wrong acting identity or forbidden payload is denied.
+- [ ] Allowed and denied probes validate policy telemetry **and** independent destination receipts.
+- [ ] Alternate tools and redirects cannot bypass the same action policy.
+- [ ] Missing/ambiguous authorization fails closed or escalates without attempting the side effect.
+
+**Evidence:** Anthropic's containment engineering analysis and real-world evaluation-environment incidents demonstrate the limits of relying on model interpretation and permissive environments; Microsoft's hosted-agent egress guidance illustrates separate destination controls and behavioural verification. The general action contract above is a cross-source engineering synthesis.
+
+- https://www.anthropic.com/research/how-we-contain-claude
+- https://www.anthropic.com/news/security
+- https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/egress-control
+
 ## When to use
 
 Apply this pattern whenever an agent can execute code, modify state, use credentials, call external services, or process instructions from sources outside the trusted control plane.
