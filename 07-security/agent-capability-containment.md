@@ -148,7 +148,7 @@ These are **engineering test recommendations**, not claims that any particular h
 
 - https://www.anthropic.com/research/how-we-contain-claude
 - https://www.anthropic.com/news/security
-- https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/egress-control
+- https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/add-hosted-agent-guardrails
 
 ## When to use
 
